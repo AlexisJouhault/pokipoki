@@ -1,4 +1,4 @@
-package pokemeows.com.pokipoki;
+package com.pokemeows.pokipoki;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

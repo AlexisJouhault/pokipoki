@@ -1,4 +1,4 @@
-package pokemeows.com.pokipoki;
+package com.pokemeows.pokipoki;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

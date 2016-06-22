@@ -1,4 +1,4 @@
-package pokemeows.com.pokipoki;
+package com.pokemeows.pokipoki;
 
 import org.junit.Test;
 

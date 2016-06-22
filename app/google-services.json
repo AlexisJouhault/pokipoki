@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "209098630411",
+    "firebase_url": "https://pokemeows.firebaseio.com",
+    "project_id": "pokemeows",
+    "storage_bucket": "pokemeows.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209098630411:android:39d0921a69ec23f7",
+        "android_client_info": {
+          "package_name": "com.pokemeows.pokipoki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209098630411-lu79go0c9vt3ofhcjfml7t9laqkq8db8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnLBy-8TcmNQpiOn2xS6EiPNQA6-DC8Ys"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
