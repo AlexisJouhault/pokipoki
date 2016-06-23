@@ -1,41 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Activities.LoginActivity">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:padding="40dp"
+    <com.pokemeows.pokipoki.Views.UnswipableViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/login_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <EditText
-            android:inputType="textEmailAddress"
-            android:layout_centerInParent="true"
-            android:id="@+id/sign_in_email"
-            android:hint="@string/email_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:inputType="textPassword"
-            android:id="@+id/sign_in_password"
-            android:layout_below="@id/sign_in_email"
-            android:hint="@string/password_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:padding="20dp"
-            android:id="@+id/submit_sign_in"
-            android:layout_below="@+id/sign_in_password"
-            android:text="@string/sign_in"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

@@ -1,123 +1,56 @@
 package com.pokemeows.pokipoki.Activities;
 
-
-import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import android.content.Intent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.pokemeows.pokipoki.Adapters.LoginFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.Fragments.SignupFragment;
+import com.pokemeows.pokipoki.Views.UnswipableViewPager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends AppCompatActivity {
 
-    private String TAG = LoginActivity.class.getName();
-    private FirebaseAuth firebaseAuth;
+    private LoginFragmentPagerAdapter loginPagerAdapter;
 
-    @BindView(R.id.sign_in_email) EditText signInEmail;
-    @BindView(R.id.sign_in_password) EditText signInPassword;
+    @BindView(R.id.login_pager) UnswipableViewPager loginPager;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        firebaseAuth = FirebaseAuth.getInstance();
         ButterKnife.bind(this);
-
+        setupUI();
     }
 
-    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-        @Override
-        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if (user != null) {
-                // User is signed in
-                Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-            } else {
-                // User is signed out
-                Log.d(TAG, "onAuthStateChanged:signed_out");
-            }
-            //
-        }
-    };
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        firebaseAuth.addAuthStateListener(authStateListener);
+    private void setupUI() {
+        loginPagerAdapter = new LoginFragmentPagerAdapter(getSupportFragmentManager());
+         loginPager.setAdapter(loginPagerAdapter);
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
-        if (authStateListener != null) {
-            firebaseAuth.removeAuthStateListener(authStateListener);
+    public void onBackPressed() {
+        if (loginPager.getCurrentItem() > 0) {
+            loginPager.setCurrentItem(0);
         }
     }
 
-    @OnClick(R.id.submit_sign_in)
-    public void onSubmitSignIn(View v) {
-        Log.d(TAG, "click");
-
-        String email = signInEmail.getText().toString();
-        String password = signInPassword.getText().toString();
-
-        if (email != null && password != null
-                && !email.equals("") && !password.equals("")) {
-            signInUser(email, password);
-        }
-
+    public void showSignUpFragment() {
+        loginPager.setCurrentItem(loginPagerAdapter.getSignUpPos());
     }
 
-    private void signInUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+    public void showLoginFragment() {
+        loginPager.setCurrentItem(loginPagerAdapter.getLoginPos());
 
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "signInWithEmail", task.getException());
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-    }
-
-    public void createUser(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
     }
 }
