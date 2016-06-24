@@ -1,14 +1,15 @@
-package com.pokemeows.pokipoki.Fragments;
+package com.pokemeows.pokipoki.Fragments.Login;
 
 import android.app.ProgressDialog;
 
+import com.pokemeows.pokipoki.Fragments.BaseFragment;
 import com.pokemeows.pokipoki.R;
 
 /**
  * Created by alexisjouhault on 6/22/16.
  * ~~PokiPoki project~~
  */
-public class PagerFragment extends BaseFragment {
+public class LoginPagerFragment extends BaseFragment {
 
     private int position = 0;
     private ProgressDialog progressDialog;

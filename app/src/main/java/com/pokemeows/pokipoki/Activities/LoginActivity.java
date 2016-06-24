@@ -1,17 +1,9 @@
 package com.pokemeows.pokipoki.Activities;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-
-import android.content.Intent;
-import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,10 +11,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pokemeows.pokipoki.Adapters.LoginFragmentPagerAdapter;
-import com.pokemeows.pokipoki.Fragments.PagerFragment;
 import com.pokemeows.pokipoki.Listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Fragments.SignupFragment;
 import com.pokemeows.pokipoki.Tools.MessageDisplayer;
 import com.pokemeows.pokipoki.Views.UnswipableViewPager;
 
@@ -81,11 +71,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActionListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                        if (!task.isSuccessful()) {
-                            //failure
-                            MessageDisplayer.showMessage(LoginActivity.this, "Authentication failed.");
-                        } else {
-                            //success
+                        if (task.isSuccessful()) {
+                            MessageDisplayer.showMessage(LoginActivity.this, "Success");
                         }
 
                         onCompleteListener.onComplete(task);
@@ -104,11 +91,8 @@ public class LoginActivity extends AppCompatActivity implements LoginActionListe
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
-                        if (!task.isSuccessful()) {
-                            //failure
-                            MessageDisplayer.showMessage(LoginActivity.this, task.getException().getMessage());
-                        } else {
-                            //success
+                        if (task.isSuccessful()) {
+                            MessageDisplayer.showMessage(LoginActivity.this, "Success");
                         }
                         onCompleteListener.onComplete(task);
 
