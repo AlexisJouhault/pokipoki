@@ -8,4 +8,9 @@
     <string name="already_a_member">Already a member? Login</string>
     <string name="no_account">No account yet? Create one</string>
     <string name="login">Login</string>
+    <string name="tab_title">Title</string>
+    <string name="profile">Profile</string>
+    <string name="toolbar_title">PokiPoki</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
 </resources>

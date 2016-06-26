@@ -7,8 +7,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.LoginActivity">
+        android:theme="@style/Theme.PokiPoki">
+        <activity android:name=".Activities.LoginActivity"
+            >
         </activity>
 
         <activity android:name=".Activities.MainActivity" />

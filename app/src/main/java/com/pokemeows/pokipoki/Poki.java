@@ -3,6 +3,8 @@ package com.pokemeows.pokipoki;
 import android.app.Application;
 import android.util.Log;
 
+import com.pokemeows.pokipoki.Singletons.Session.SharedPreferencesHelper;
+
 import butterknife.ButterKnife;
 
 /**

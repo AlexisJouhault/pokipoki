@@ -46,6 +46,10 @@ dependencies {
 
     compile 'com.github.oxoooo:touch-image-view:1.0.1'
 
+    compile('com.mikepenz:materialdrawer:5.3.1@aar') {
+        transitive = true
+    }
+
     //Firebase
     compile 'com.google.firebase:firebase-core:9.0.2'
     compile 'com.google.firebase:firebase-database:9.0.2'
