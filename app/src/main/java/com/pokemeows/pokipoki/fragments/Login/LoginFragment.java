@@ -19,7 +19,6 @@ import com.pokemeows.pokipoki.Activities.MainActivity;
 import com.pokemeows.pokipoki.Listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.Singletons.CurrentUserInfo;
-import com.pokemeows.pokipoki.Singletons.Session.SharedPreferencesHelper;
 import com.pokemeows.pokipoki.Tools.MessageDisplayer;
 
 import butterknife.BindView;
@@ -49,7 +48,7 @@ public class LoginFragment extends LoginPagerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_login, null);
+        mainView = inflater.inflate(R.layout.fragment_login, container, false);
         actionListener = (LoginActionListener) getActivity();
 
         ButterKnife.bind(this, mainView);

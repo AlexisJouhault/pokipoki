@@ -47,7 +47,7 @@ public class SignupFragment extends LoginPagerFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mainView = inflater.inflate(R.layout.fragment_signup, null);
+        mainView = inflater.inflate(R.layout.fragment_signup, container, false);
         actionListener = (LoginActionListener) getActivity();
 
         ButterKnife.bind(this, mainView);

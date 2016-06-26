@@ -12,8 +12,6 @@ import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.Tools.AuthManager;
 import com.pokemeows.pokipoki.Views.UnswipableViewPager;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Map;
 
 import butterknife.BindView;
