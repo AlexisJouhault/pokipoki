@@ -1,9 +1,8 @@
-package com.pokemeows.pokipoki.Singletons;
+package com.pokemeows.pokipoki.Tools.Session;
 
-import android.support.annotation.NonNull;
-
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by alexisjouhault on 6/24/16.
@@ -24,9 +23,14 @@ public class CurrentUserInfo {
 
     public void setFireBaseUser(FirebaseUser user) {
         this.firebaseUser = user;
+
     }
 
     public FirebaseUser getFirebaseUser() {
         return firebaseUser;
+    }
+
+    public void logout() {
+        this.firebaseUser = null;
     }
 }

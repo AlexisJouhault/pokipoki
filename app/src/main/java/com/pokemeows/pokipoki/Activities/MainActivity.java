@@ -1,11 +1,11 @@
 package com.pokemeows.pokipoki.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,11 +19,16 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.pokemeows.pokipoki.Adapters.MainFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Singletons.CurrentUserInfo;
+import com.pokemeows.pokipoki.Tools.DrawerTags;
+import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +44,21 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.fragment_viewpager) ViewPager fragmentViewPager;
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
+
+    private Drawer.OnDrawerItemClickListener itemClickListener = new Drawer.OnDrawerItemClickListener() {
+        @Override
+        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+            if (drawerItem.getTag().equals(DrawerTags.LOGOUT)) {
+                Log.d(TAG, "Logging out");
+                CurrentUserInfo.getInstance().logout();
+                Intent intent = new Intent(MainActivity.this, SplashScreenActivity.class);
+                intent.putExtra("logout", true);
+                startActivity(intent);
+                finish();
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,11 +81,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpNavigationDrawer() throws Exception {
+        PrimaryDrawerItem homeItem = new PrimaryDrawerItem()
+                .withIdentifier(1)
+                .withName(R.string.home)
+                .withIcon(R.drawable.ic_home_black)
+                .withTag(DrawerTags.HOME);
+        PrimaryDrawerItem profileItem = new PrimaryDrawerItem()
+                .withIdentifier(2)
+                .withName(R.string.profile)
+                .withIcon(R.drawable.ic_profile_black)
+                .withTag(DrawerTags.PROFILE);
+        PrimaryDrawerItem logoutItem = new PrimaryDrawerItem()
+                .withIdentifier(3)
+                .withName(R.string.logout)
+                .withIcon(R.drawable.ic_exit_black)
+                .withTag(DrawerTags.LOGOUT);
         this.drawer = new DrawerBuilder()
                 .withActivity(this)
+                .withSelectedItem(-1)
                 .withTranslucentStatusBar(false)
                 .withActionBarDrawerToggle(false)
                 .withAccountHeader(buildProfile())
+                .withOnDrawerItemClickListener(itemClickListener)
+                .addDrawerItems(homeItem, profileItem, new DividerDrawerItem(), logoutItem)
                 .build();
         ActionBarDrawerToggle drawerToggle = new ActionBarDrawerToggle(this, drawer.getDrawerLayout(), R.string.profile, R.string.profile);
         this.drawer.setActionBarDrawerToggle(drawerToggle);

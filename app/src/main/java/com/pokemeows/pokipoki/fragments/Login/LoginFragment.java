@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.pokemeows.pokipoki.Activities.MainActivity;
 import com.pokemeows.pokipoki.Listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Singletons.CurrentUserInfo;
+import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
 import com.pokemeows.pokipoki.Tools.MessageDisplayer;
 
 import butterknife.BindView;

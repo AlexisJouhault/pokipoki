@@ -16,10 +16,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.database.DatabaseReference;
 import com.pokemeows.pokipoki.Activities.MainActivity;
 import com.pokemeows.pokipoki.Listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Singletons.CurrentUserInfo;
+import com.pokemeows.pokipoki.Tools.Database.DatabaseReferenceKeys;
+import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
+import com.pokemeows.pokipoki.Tools.Database.FirebaseDatabaseHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,7 +64,7 @@ public class SignupFragment extends LoginPagerFragment {
     }
 
     @OnClick(R.id.btn_signup)
-    public void signup() {
+    public void signUp() {
         Log.d(TAG, "Signup");
 
         if (!validate()) {
@@ -85,7 +88,7 @@ public class SignupFragment extends LoginPagerFragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 try {
                     if (task.isSuccessful()) {
-                        onSignupSuccess(task);
+                        onSignUpSuccess(task);
                     } else {
                         throw task.getException();
                     }
@@ -99,9 +102,14 @@ public class SignupFragment extends LoginPagerFragment {
     }
 
 
-    public void onSignupSuccess(Task<AuthResult> task) {
+    public void onSignUpSuccess(Task<AuthResult> task) {
         signupButton.setEnabled(true);
         if (task.getResult() != null) {
+            //setting user info in database
+            FirebaseDatabaseHelper firebaseDatabaseHelper = FirebaseDatabaseHelper.getInstance();
+            DatabaseReference databaseReference = firebaseDatabaseHelper.getReference(DatabaseReferenceKeys.USERS);
+            databaseReference.child(DatabaseReferenceKeys.USER_ID).setValue(task.getResult().getUser().getUid());
+
             CurrentUserInfo.getInstance().setFireBaseUser(task.getResult().getUser());
         }
         Intent intent = new Intent(getActivity(), MainActivity.class);

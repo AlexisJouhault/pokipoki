@@ -3,12 +3,11 @@ package com.pokemeows.pokipoki;
 import android.app.Application;
 import android.util.Log;
 
-import com.pokemeows.pokipoki.Singletons.Session.SharedPreferencesHelper;
-
 import butterknife.ButterKnife;
 
 /**
  * Created by alexisjouhault on 6/22/16.
+ * ~~PokiPoki project~~
  */
 public class Poki extends Application {
 

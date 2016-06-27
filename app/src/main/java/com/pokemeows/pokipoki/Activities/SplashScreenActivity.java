@@ -10,7 +10,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Singletons.CurrentUserInfo;
+import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
 
 public class SplashScreenActivity extends Activity {
 
@@ -22,6 +22,10 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
+
+        if (getIntent().getBooleanExtra("logout", false)) {
+            firebaseAuth.signOut();
+        }
 
     }
 

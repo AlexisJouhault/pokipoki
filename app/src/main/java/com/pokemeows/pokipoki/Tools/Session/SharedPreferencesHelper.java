@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Singletons.Session;
+package com.pokemeows.pokipoki.Tools.Session;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -28,7 +28,7 @@ public class SharedPreferencesHelper {
         if (user != null && !user.equals("")) {
             SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
             editor.putString(USER_KEY, user);
-            editor.commit();
+            editor.apply();
         }
     }
 

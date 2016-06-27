@@ -13,4 +13,6 @@
     <string name="toolbar_title">PokiPoki</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string name="logout">Logout</string>
+    <string name="home">Home</string>
 </resources>
