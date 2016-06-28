@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools.Database;
+package com.pokemeows.pokipoki.Tools.Firebase;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

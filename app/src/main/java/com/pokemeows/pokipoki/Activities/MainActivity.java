@@ -27,9 +27,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.pokemeows.pokipoki.Adapters.MainFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.Tools.Database.Models.UserInfo;
 import com.pokemeows.pokipoki.Tools.DrawerTags;
 import com.pokemeows.pokipoki.Tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUserWrapper currentUser;
     private MainFragmentPagerAdapter fragmentPagerAdapter;
     private Drawer drawer;
+    private AccountHeader accountHeader;
 
     @BindView(R.id.fragment_viewpager) ViewPager fragmentViewPager;
     @BindView(R.id.tabs) TabLayout tabLayout;
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
         this.fragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
         this.fragmentViewPager.setAdapter(fragmentPagerAdapter);
@@ -74,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         this.currentUser = CurrentUserInfo.getInstance().getFirebaseUser();
 
         try {
+            buildProfile();
             setUpNavigationDrawer();
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
@@ -102,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 .withSelectedItem(-1)
                 .withTranslucentStatusBar(false)
                 .withActionBarDrawerToggle(false)
-                .withAccountHeader(buildProfile())
+                .withAccountHeader(accountHeader)
                 .withOnDrawerItemClickListener(itemClickListener)
                 .addDrawerItems(homeItem, profileItem, new DividerDrawerItem(), logoutItem)
                 .build();
@@ -125,14 +132,14 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private AccountHeader buildProfile() {
+    private void buildProfile() {
         // Create the AccountHeader
-        return new AccountHeaderBuilder()
+        this.accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName(currentUser.getName() != null ? currentUser.getName() : "Trainer")
+                                .withIdentifier(200)
                                 .withEmail(currentUser.getEmail())
                                 .withIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.profile, null))
                 )
@@ -143,6 +150,16 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .build();
+    }
+
+    @Subscribe
+    public void onUserDataChanged(UserInfo userData) {
+        this.accountHeader.updateProfile(new ProfileDrawerItem()
+                .withIdentifier(200)
+                .withName(currentUser.getName() != null ? currentUser.getName() : "Trainer")
+                .withEmail(currentUser.getEmail())
+                .withIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.profile, null))
+        );
     }
 
     @Override
@@ -170,5 +187,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }

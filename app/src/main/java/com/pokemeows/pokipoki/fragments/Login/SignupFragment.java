@@ -20,9 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.pokemeows.pokipoki.Activities.MainActivity;
 import com.pokemeows.pokipoki.Listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Tools.Database.DatabaseReferenceKeys;
+import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseReferenceKeys;
 import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
-import com.pokemeows.pokipoki.Tools.Database.FirebaseDatabaseHelper;
+import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -107,9 +107,9 @@ public class SignupFragment extends LoginPagerFragment {
         if (task.getResult() != null) {
             //setting user info in database
             FirebaseDatabaseHelper firebaseDatabaseHelper = FirebaseDatabaseHelper.getInstance();
-            DatabaseReference databaseReference = firebaseDatabaseHelper.getReference(DatabaseReferenceKeys.USERS);
-            databaseReference.child(task.getResult().getUser().getUid()).child(DatabaseReferenceKeys.EMAIL).setValue(emailText.getText().toString());
-            databaseReference.child(task.getResult().getUser().getUid()).child(DatabaseReferenceKeys.DISPLAY_NAME).setValue(nameText.getText().toString());
+            DatabaseReference databaseReference = firebaseDatabaseHelper.getReference(FirebaseDatabaseReferenceKeys.USERS);
+            databaseReference.child(task.getResult().getUser().getUid()).child(FirebaseDatabaseReferenceKeys.EMAIL).setValue(emailText.getText().toString());
+            databaseReference.child(task.getResult().getUser().getUid()).child(FirebaseDatabaseReferenceKeys.DISPLAY_NAME).setValue(nameText.getText().toString());
 
             CurrentUserInfo.getInstance().setFireBaseUser(task.getResult().getUser());
         }

@@ -1,15 +1,26 @@
 package com.pokemeows.pokipoki.Tools.Database.Models;
 
+import com.orm.SugarRecord;
+
 /**
  * Created by alexisjouhault on 6/27/16.
  * ~~PokiPoki project~~
  */
-public class User {
+public class UserInfo extends SugarRecord {
 
+    private String userId;
     private String displayName;
     private String email;
 
-    public User() {
+    public UserInfo() {
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getDisplayName() {
