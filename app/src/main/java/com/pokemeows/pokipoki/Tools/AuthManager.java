@@ -26,9 +26,9 @@ public class AuthManager {
         this.fireBaseAuth = firebaseAuth;
     }
 
-    public void login(FirebaseAuth firebaseAuth, String email, String password,
+    public void login(String email, String password,
                       final OnCompleteListener<AuthResult> onCompleteListener) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
+        this.fireBaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(parentActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -41,10 +41,11 @@ public class AuthManager {
                 });
     }
 
-    public void createAccount(FirebaseAuth firebaseAuth, String email, String password,
+    public void createAccount(String email, String password,
                               Map<String, String> arguments,
                               final OnCompleteListener<AuthResult> onCompleteListener) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+
+        this.fireBaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(parentActivity, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

@@ -81,7 +81,7 @@ public class SignupFragment extends LoginPagerFragment {
         String password = passwordText.getText().toString();
 
         Map<String, String> arguments = new HashMap<>();
-        arguments.put("name", name);
+        arguments.put("displayName", name);
 
         actionListener.createUser(email, password, arguments, new OnCompleteListener<AuthResult>() {
             @Override
@@ -108,7 +108,8 @@ public class SignupFragment extends LoginPagerFragment {
             //setting user info in database
             FirebaseDatabaseHelper firebaseDatabaseHelper = FirebaseDatabaseHelper.getInstance();
             DatabaseReference databaseReference = firebaseDatabaseHelper.getReference(DatabaseReferenceKeys.USERS);
-            databaseReference.child(DatabaseReferenceKeys.USER_ID).setValue(task.getResult().getUser().getUid());
+            databaseReference.child(task.getResult().getUser().getUid()).child(DatabaseReferenceKeys.EMAIL).setValue(emailText.getText().toString());
+            databaseReference.child(task.getResult().getUser().getUid()).child(DatabaseReferenceKeys.DISPLAY_NAME).setValue(nameText.getText().toString());
 
             CurrentUserInfo.getInstance().setFireBaseUser(task.getResult().getUser());
         }

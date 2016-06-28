@@ -28,6 +28,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.pokemeows.pokipoki.Adapters.MainFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.Tools.DrawerTags;
+import com.pokemeows.pokipoki.Tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
 
 import butterknife.BindView;
@@ -37,7 +38,7 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = MainActivity.class.toString();
-    private FirebaseUser currentUser;
+    private FirebaseUserWrapper currentUser;
     private MainFragmentPagerAdapter fragmentPagerAdapter;
     private Drawer drawer;
 
@@ -131,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 .withHeaderBackground(R.drawable.header)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withName(currentUser.getDisplayName() != null ? currentUser.getDisplayName() : "Trainer")
+                                .withName(currentUser.getName() != null ? currentUser.getName() : "Trainer")
                                 .withEmail(currentUser.getEmail())
                                 .withIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.profile, null))
                 )

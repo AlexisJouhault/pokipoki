@@ -64,13 +64,13 @@ public class LoginActivity extends AppCompatActivity implements LoginActionListe
     public void createUser(String email, String password, Map<String,
             String> arguments, final OnCompleteListener<AuthResult> onCompleteListener) {
 
-        authManager.createAccount(firebaseAuth, email, password, arguments, onCompleteListener);
+        authManager.createAccount(email, password, arguments, onCompleteListener);
     }
 
     @Override
     public void signIn(String email, String password,
                        final OnCompleteListener<AuthResult> onCompleteListener) {
 
-        authManager.login(firebaseAuth, email, password, onCompleteListener);
+        authManager.login(email, password, onCompleteListener);
     }
 }

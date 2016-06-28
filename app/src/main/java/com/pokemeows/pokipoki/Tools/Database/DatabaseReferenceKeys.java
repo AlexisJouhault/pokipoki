@@ -7,6 +7,6 @@ package com.pokemeows.pokipoki.Tools.Database;
 public class DatabaseReferenceKeys {
 
     public static String USERS = "users";
-    public static String USER_ID = "userId";
-
+    public static String EMAIL = "email";
+    public static String DISPLAY_NAME = "displayName";
 }

@@ -1,6 +1,7 @@
 package com.pokemeows.pokipoki.Tools.Session;
 
 import com.google.firebase.auth.FirebaseUser;
+import com.pokemeows.pokipoki.Tools.FirebaseUserWrapper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -11,7 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 public class CurrentUserInfo {
 
     private static CurrentUserInfo currentUserInfo = new CurrentUserInfo();
-    private FirebaseUser firebaseUser;
+    private FirebaseUserWrapper firebaseUser;
 
     private CurrentUserInfo() {
 
@@ -22,11 +23,11 @@ public class CurrentUserInfo {
     }
 
     public void setFireBaseUser(FirebaseUser user) {
-        this.firebaseUser = user;
+        this.firebaseUser = new FirebaseUserWrapper(user);
 
     }
 
-    public FirebaseUser getFirebaseUser() {
+    public FirebaseUserWrapper getFirebaseUser() {
         return firebaseUser;
     }
 
