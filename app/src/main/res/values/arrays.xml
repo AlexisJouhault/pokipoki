@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="continents">
+        <item>Europe</item>
+        <item>Europe1</item>
+        <item>Europe2</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+        <item>Europe</item>
+    </string-array>
+    <string-array name="cities">Paris</string-array>
+    <string-array name="countries">France</string-array>
+</resources>

@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Views;
+package com.pokemeows.pokipoki.views;
 
 import android.content.Context;
 

@@ -1,5 +1,6 @@
-package com.pokemeows.pokipoki.Activities;
+package com.pokemeows.pokipoki.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,7 +15,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.firebase.auth.FirebaseUser;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -22,21 +22,21 @@ import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.pokemeows.pokipoki.Adapters.MainFragmentPagerAdapter;
+import com.pokemeows.pokipoki.adapters.MainFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Tools.Database.Models.UserInfo;
-import com.pokemeows.pokipoki.Tools.DrawerTags;
-import com.pokemeows.pokipoki.Tools.FirebaseUserWrapper;
-import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
+import com.pokemeows.pokipoki.tools.database.Models.UserInfo;
+import com.pokemeows.pokipoki.tools.DrawerTags;
+import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import flow.Flow;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -61,7 +61,23 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("logout", true);
                 startActivity(intent);
                 finish();
+            } else if (drawerItem.getTag().equals(DrawerTags.PROFILE)) {
+                return onProfileClickListener.onProfileImageClick(view, accountHeader.getActiveProfile(), true);
             }
+            return false;
+        }
+    };
+
+    private AccountHeader.OnAccountHeaderProfileImageListener onProfileClickListener = new AccountHeader.OnAccountHeaderProfileImageListener() {
+        @Override
+        public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        @Override
+        public boolean onProfileImageLongClick(View view, IProfile profile, boolean current) {
             return false;
         }
     };
@@ -69,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         ButterKnife.bind(this);
@@ -137,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
         this.accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.header)
+                .withOnAccountHeaderProfileImageListener(onProfileClickListener)
+                .withAlternativeProfileHeaderSwitching(false)
                 .addProfiles(
                         new ProfileDrawerItem()
                                 .withIdentifier(200)
@@ -186,7 +205,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        if (this.drawer.isDrawerOpen()) {
+            this.drawer.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
@@ -194,4 +217,5 @@ public class MainActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
         super.onStop();
     }
+
 }

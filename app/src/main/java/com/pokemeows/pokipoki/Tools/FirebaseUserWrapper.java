@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools;
+package com.pokemeows.pokipoki.tools;
 
 import android.util.Log;
 
@@ -8,9 +8,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
-import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseReferenceKeys;
-import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseHelper;
-import com.pokemeows.pokipoki.Tools.Database.Models.UserInfo;
+import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseReferenceKeys;
+import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseHelper;
+import com.pokemeows.pokipoki.tools.database.Models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 

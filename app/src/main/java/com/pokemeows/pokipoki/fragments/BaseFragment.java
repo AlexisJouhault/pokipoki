@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Fragments;
+package com.pokemeows.pokipoki.fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

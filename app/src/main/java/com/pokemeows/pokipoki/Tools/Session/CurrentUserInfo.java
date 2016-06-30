@@ -1,9 +1,7 @@
-package com.pokemeows.pokipoki.Tools.Session;
+package com.pokemeows.pokipoki.tools.session;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.pokemeows.pokipoki.Tools.FirebaseUserWrapper;
-
-import org.greenrobot.eventbus.EventBus;
+import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
 
 /**
  * Created by alexisjouhault on 6/24/16.

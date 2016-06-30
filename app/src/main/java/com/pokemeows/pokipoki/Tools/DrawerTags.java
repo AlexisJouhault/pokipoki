@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools;
+package com.pokemeows.pokipoki.tools;
 
 /**
  * Created by alexisjouhault on 6/26/16.

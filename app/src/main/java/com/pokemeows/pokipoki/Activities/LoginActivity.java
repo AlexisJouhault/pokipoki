@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Activities;
+package com.pokemeows.pokipoki.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,11 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.pokemeows.pokipoki.Adapters.LoginFragmentPagerAdapter;
-import com.pokemeows.pokipoki.Listeners.LoginActionListener;
+import com.pokemeows.pokipoki.adapters.LoginFragmentPagerAdapter;
+import com.pokemeows.pokipoki.listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Tools.AuthManager;
-import com.pokemeows.pokipoki.Views.UnswipableViewPager;
+import com.pokemeows.pokipoki.tools.AuthManager;
+import com.pokemeows.pokipoki.views.UnswipableViewPager;
 
 import java.util.Map;
 

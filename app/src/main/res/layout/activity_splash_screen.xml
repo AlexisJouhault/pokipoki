@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pokemeows.pokipoki.Activities.SplashScreenActivity">
+    tools:context="com.pokemeows.pokipoki.activities.SplashScreenActivity">
 
     <ImageView
+        android:contentDescription="@string/app_name"
         android:layout_centerInParent="true"
         android:background="@drawable/poke"
         android:layout_width="250dp"

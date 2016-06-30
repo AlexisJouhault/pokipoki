@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Fragments.Login;
+package com.pokemeows.pokipoki.fragments.login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.DatabaseReference;
-import com.pokemeows.pokipoki.Activities.MainActivity;
-import com.pokemeows.pokipoki.Listeners.LoginActionListener;
+import com.pokemeows.pokipoki.activities.MainActivity;
+import com.pokemeows.pokipoki.listeners.LoginActionListener;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseReferenceKeys;
-import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
-import com.pokemeows.pokipoki.Tools.Firebase.FirebaseDatabaseHelper;
+import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseReferenceKeys;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
+import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SignupFragment extends LoginPagerFragment {
+public class SignUpFragment extends LoginPagerFragment {
     private static final String TAG = "SignupActivity";
 
     private View mainView;
@@ -43,7 +43,7 @@ public class SignupFragment extends LoginPagerFragment {
     @BindView(R.id.btn_signup) Button signupButton;
     @BindView(R.id.link_login) TextView loginLink;
 
-    public SignupFragment() {
+    public SignUpFragment() {
         setPosition(1);
     }
 

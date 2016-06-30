@@ -1,11 +1,11 @@
-package com.pokemeows.pokipoki.Adapters;
+package com.pokemeows.pokipoki.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.pokemeows.pokipoki.Fragments.Login.LoginFragment;
-import com.pokemeows.pokipoki.Fragments.Login.SignupFragment;
+import com.pokemeows.pokipoki.fragments.login.LoginFragment;
+import com.pokemeows.pokipoki.fragments.login.SignUpFragment;
 
 /**
  * Created by alexisjouhault on 6/22/16.
@@ -16,7 +16,7 @@ public class LoginFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private final int LOGIN_FRAGMENT_COUNT = 2;
 
     private LoginFragment loginFragment = new LoginFragment();
-    private SignupFragment signupFragment = new SignupFragment();
+    private SignUpFragment signUpFragment = new SignUpFragment();
 
     public LoginFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -27,7 +27,7 @@ public class LoginFragmentPagerAdapter extends FragmentStatePagerAdapter {
         if (position == getLoginPos()) {
             return loginFragment;
         } else if (position == getSignUpPos()) {
-            return signupFragment;
+            return signUpFragment;
         }
         return null;
     }
@@ -38,7 +38,7 @@ public class LoginFragmentPagerAdapter extends FragmentStatePagerAdapter {
     }
 
     public int getSignUpPos() {
-        return signupFragment.getPosition();
+        return signUpFragment.getPosition();
     }
 
     public int getLoginPos() {

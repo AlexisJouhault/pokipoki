@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools;
+package com.pokemeows.pokipoki.tools;
 
 import android.content.Context;
 import android.widget.Toast;

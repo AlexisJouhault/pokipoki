@@ -1,9 +1,9 @@
-package com.pokemeows.pokipoki.Fragments.Main;
+package com.pokemeows.pokipoki.fragments.main;
 
 import android.content.Context;
 
-import com.pokemeows.pokipoki.Activities.MainActivity;
-import com.pokemeows.pokipoki.Fragments.BaseFragment;
+import com.pokemeows.pokipoki.activities.MainActivity;
+import com.pokemeows.pokipoki.fragments.BaseFragment;
 
 /**
  * Created by alexisjouhault on 6/24/16.

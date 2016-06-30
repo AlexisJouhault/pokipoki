@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Fragments.Main;
+package com.pokemeows.pokipoki.fragments.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

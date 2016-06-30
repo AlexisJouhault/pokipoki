@@ -1,7 +1,6 @@
-package com.pokemeows.pokipoki.Tools;
+package com.pokemeows.pokipoki.tools;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -10,7 +9,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Map;
-import java.util.concurrent.Executor;
 
 /**
  * Created by alexisjouhault on 6/25/16.

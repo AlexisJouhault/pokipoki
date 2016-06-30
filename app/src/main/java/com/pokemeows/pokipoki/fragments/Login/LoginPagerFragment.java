@@ -1,8 +1,8 @@
-package com.pokemeows.pokipoki.Fragments.Login;
+package com.pokemeows.pokipoki.fragments.login;
 
 import android.app.ProgressDialog;
 
-import com.pokemeows.pokipoki.Fragments.BaseFragment;
+import com.pokemeows.pokipoki.fragments.BaseFragment;
 import com.pokemeows.pokipoki.R;
 
 /**

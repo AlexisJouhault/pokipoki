@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools.Database.Models;
+package com.pokemeows.pokipoki.tools.database.Models;
 
 import com.orm.SugarRecord;
 

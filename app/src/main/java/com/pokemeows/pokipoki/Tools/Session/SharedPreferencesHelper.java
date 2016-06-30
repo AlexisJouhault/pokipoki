@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools.Session;
+package com.pokemeows.pokipoki.tools.session;
 
 import android.content.Context;
 import android.content.SharedPreferences;

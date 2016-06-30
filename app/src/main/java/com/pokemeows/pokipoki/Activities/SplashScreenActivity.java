@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Activities;
+package com.pokemeows.pokipoki.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.Tools.Session.CurrentUserInfo;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 
 public class SplashScreenActivity extends Activity {
 

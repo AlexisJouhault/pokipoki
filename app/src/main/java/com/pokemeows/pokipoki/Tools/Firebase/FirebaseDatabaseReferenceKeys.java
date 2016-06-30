@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools.Firebase;
+package com.pokemeows.pokipoki.tools.firebase;
 
 /**
  * Created by alexisjouhault on 6/26/16.

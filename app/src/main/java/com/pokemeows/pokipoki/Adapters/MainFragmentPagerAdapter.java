@@ -1,13 +1,13 @@
-package com.pokemeows.pokipoki.Adapters;
+package com.pokemeows.pokipoki.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.pokemeows.pokipoki.Fragments.Main.CardsFragment;
-import com.pokemeows.pokipoki.Fragments.Main.EventsFragment;
-import com.pokemeows.pokipoki.Fragments.Main.NewsFeedFragment;
-import com.pokemeows.pokipoki.Fragments.Main.TabFragment;
+import com.pokemeows.pokipoki.fragments.main.CardsFragment;
+import com.pokemeows.pokipoki.fragments.main.EventsFragment;
+import com.pokemeows.pokipoki.fragments.main.NewsFeedFragment;
+import com.pokemeows.pokipoki.fragments.main.TabFragment;
 
 import java.util.ArrayList;
 import java.util.List;

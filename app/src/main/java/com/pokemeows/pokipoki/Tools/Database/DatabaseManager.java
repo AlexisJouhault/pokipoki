@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Tools.Database;
+package com.pokemeows.pokipoki.tools.database;
 
 import com.orm.SugarRecord;
 
@@ -25,11 +25,11 @@ public class DatabaseManager {
         elem.save();
     }
 
-    public SugarRecord findElemById(Class<SugarRecord> elemclass, int id) {
-        return SugarRecord.findById(elemclass, id);
+    public SugarRecord findElemById(Class<SugarRecord> elemClass, int id) {
+        return SugarRecord.findById(elemClass, id);
     }
 
-    public List<SugarRecord> findAll(Class<SugarRecord> elemclass) {
-        return SugarRecord.listAll(elemclass);
+    public List<SugarRecord> findAll(Class<SugarRecord> elemClass) {
+        return SugarRecord.listAll(elemClass);
     }
 }

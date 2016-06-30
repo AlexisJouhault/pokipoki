@@ -3,4 +3,15 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="text_regular">16sp</dimen>
+
+    <dimen name="tabs_height">48dp</dimen>
+    <dimen name="viewpager_header_height">144dp</dimen>
+    <dimen name="space_middle">24dp</dimen>
+
+    <dimen name="header_height">298dp</dimen>
+    <dimen name="min_header_height">250dp</dimen>
+    <dimen name="header_logo_size">100dp</dimen>
+    <dimen name="text_big">30sp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+    <dimen name="text_toolbar">20sp</dimen>
 </resources>

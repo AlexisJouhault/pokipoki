@@ -1,0 +1,95 @@
+<com.pokemeows.pokipoki.widgets.TouchCallbackLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent"
+        android:elevation="4dp"
+        app:titleTextColor="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:textSize="@dimen/text_toolbar"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:id="@+id/profile_display_name_toolbar"
+            android:text="@string/app_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:layout_marginTop="@dimen/tabs_height"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:clipChildren="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height">
+
+            <ImageView
+                android:contentDescription="@string/app_name"
+                android:layout_weight="0.4"
+                android:id="@+id/profile_banner"
+                android:src="@drawable/header"
+                android:scaleType="centerCrop"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <RelativeLayout
+                android:layout_weight="0.6"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.pkmmte.view.CircularImageView
+                    android:layout_marginTop="-80dp"
+                    android:src="@drawable/profile"
+                    android:id="@+id/profile_picture"
+                    app:border="false"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp" />
+                <TextView
+                    android:layout_below="@+id/profile_picture"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:id="@+id/profile_display_name"
+                    android:textSize="@dimen/text_big"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"
+                    android:text="@string/app_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <com.pokemeows.pokipoki.widgets.SlidingTabLayout
+            android:id="@id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/tabs_height"/>
+    </LinearLayout>
+
+</com.pokemeows.pokipoki.widgets.TouchCallbackLayout>
