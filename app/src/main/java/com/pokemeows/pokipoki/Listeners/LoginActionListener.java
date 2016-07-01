@@ -1,4 +1,4 @@
-package com.pokemeows.pokipoki.Listeners;
+package com.pokemeows.pokipoki.listeners;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.AuthResult;
@@ -10,12 +10,12 @@ import java.util.Map;
  * ~~PokiPoki project~~
  */
 public interface LoginActionListener {
-    public void showSignUpFragment();
-    public void showLoginFragment();
+    void showSignUpFragment();
+    void showLoginFragment();
 
-    public void createUser(String email, String password, Map<String,
+    void createUser(String email, String password, Map<String,
             String> arguments, OnCompleteListener<AuthResult> onCompleteListener);
 
-    public void signIn(String email, String password,
+    void signIn(String email, String password,
                        OnCompleteListener<AuthResult> onCompleteListener);
 }

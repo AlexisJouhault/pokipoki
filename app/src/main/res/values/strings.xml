@@ -29,4 +29,5 @@
     <string name="about">About Me</string>
     <string name="cards">Cards</string>
     <string name="contact">Contact</string>
+    <string name="header">Header</string>
 </resources>
