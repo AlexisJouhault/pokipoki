@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         if (this.drawer.isDrawerOpen()) {
             this.drawer.closeDrawer();
         } else {
-            super.onBackPressed();
+            Log.d(TAG, "Handle back button");
         }
     }
 
