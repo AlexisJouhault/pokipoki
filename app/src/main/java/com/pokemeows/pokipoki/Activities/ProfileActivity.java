@@ -2,19 +2,22 @@ package com.pokemeows.pokipoki.activities;
 
 import android.annotation.TargetApi;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.graphics.drawable.DrawableWrapper;
 import android.support.v7.widget.Toolbar;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.util.TypedValue;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.ImageView;
@@ -22,15 +25,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.flaviofaria.kenburnsview.KenBurnsView;
 import com.nineoldandroids.view.ViewHelper;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.fragments.ScrollTabHolderFragment;
 import com.pokemeows.pokipoki.fragments.ScrollViewFragment;
 import com.pokemeows.pokipoki.tools.AlphaForegroundColorSpan;
 import com.pokemeows.pokipoki.tools.ScrollTabHolder;
-
-import java.util.Random;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
     private AlphaForegroundColorSpan mAlphaForegroundColorSpan;
     private RectF mRect1 = new RectF();
     private RectF mRect2 = new RectF();
+    private CurrentUserInfo currentUserInfo = CurrentUserInfo.getInstance();
 
     private PagerAdapter mPagerAdapter;
     @BindView(R.id.header) View mHeader;
@@ -55,7 +57,6 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
     @BindView(R.id.pager) ViewPager mViewPager;
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.title) TextView title;
-    @BindView(R.id.icon) ImageView icon;
     @BindView(R.id.header_thumbnail) ImageView mHeaderLogo;
 
     @BindView(R.id.header_picture) ImageView imageView;
@@ -72,20 +73,34 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
         mSpannableString = new SpannableString(getString(R.string.app_name));
 
+        title.setText(currentUserInfo.getFirebaseUser().getName());
         mViewPager.setOffscreenPageLimit(4);
         mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
         mViewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setViewPager(mViewPager);
+        Drawable picture = ResourcesCompat.getDrawable(getResources(), currentUserInfo.getFirebaseUser().getProfilePictureResource(), null);
+        mHeaderLogo.setImageDrawable(picture);
         mPagerSlidingTabStrip.setOnPageChangeListener(this);
         mAlphaForegroundColorSpan = new AlphaForegroundColorSpan(0xffffffff);
-        ViewHelper.setAlpha(getActionBarIconView(), 0f);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setBackgroundDrawable(null);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -113,8 +128,9 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
         {
             mHeader.setTranslationY(Math.max(-view.getScrollY(), mMinHeaderTranslation));
             float ratio = clamp(mHeader.getTranslationY() / mMinHeaderTranslation, 0.0f, 1.0f);
-            interpolate(mHeaderLogo, getActionBarIconView(), sSmoothInterpolator.getInterpolation(ratio));
-            setTitleAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
+            mHeaderLogo.setAlpha(1f - sSmoothInterpolator.getInterpolation(ratio));
+            //interpolate(mHeaderLogo, getActionBarIconView(), sSmoothInterpolator.getInterpolation(ratio));
+            setToolbarAlpha(clamp(5.0F * ratio - 4.0F, 0.0F, 1.0F));
         }
     }
 
@@ -172,14 +188,11 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
         super.onPause();
     }
 
-    private void setTitleAlpha(float alpha) {
-        mAlphaForegroundColorSpan.setAlpha(alpha);
-        mSpannableString.setSpan(mAlphaForegroundColorSpan, 0, mSpannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        title.setText(mSpannableString);
-    }
-
-    private ImageView getActionBarIconView() {
-        return icon;
+    private void setToolbarAlpha(float alpha) {
+//        toolbar.setAlpha(alpha);
+//        mAlphaForegroundColorSpan.setAlpha(alpha);
+//        mSpannableString.setSpan(mAlphaForegroundColorSpan, 0, mSpannableString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        title.setText(mSpannableString);
     }
 
     public class PagerAdapter extends FragmentPagerAdapter {

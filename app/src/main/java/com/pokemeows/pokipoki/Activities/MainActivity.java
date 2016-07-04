@@ -1,6 +1,6 @@
 package com.pokemeows.pokipoki.activities;
 
-import android.content.Context;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -26,7 +27,8 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.pokemeows.pokipoki.adapters.MainFragmentPagerAdapter;
 import com.pokemeows.pokipoki.R;
-import com.pokemeows.pokipoki.tools.database.Models.UserInfo;
+import com.pokemeows.pokipoki.events.OpenActivityEvent;
+import com.pokemeows.pokipoki.tools.database.models.UserInfo;
 import com.pokemeows.pokipoki.tools.DrawerTags;
 import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
@@ -36,7 +38,6 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import flow.Flow;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private MainFragmentPagerAdapter fragmentPagerAdapter;
     private Drawer drawer;
     private AccountHeader accountHeader;
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @BindView(R.id.fragment_viewpager) ViewPager fragmentViewPager;
     @BindView(R.id.tabs) TabLayout tabLayout;
@@ -136,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         DrawerLayout mDrawerLayout = this.drawer.getDrawerLayout();
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new ActionBarDrawerToggle(
                 this,  mDrawerLayout, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close
         );
@@ -160,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         new ProfileDrawerItem()
                                 .withIdentifier(200)
                                 .withEmail(currentUser.getEmail())
-                                .withIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.profile, null))
+                                .withIcon(ResourcesCompat.getDrawable(getResources(), currentUser.getProfilePictureResource(), null))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -177,8 +179,24 @@ public class MainActivity extends AppCompatActivity {
                 .withIdentifier(200)
                 .withName(currentUser.getName() != null ? currentUser.getName() : "Trainer")
                 .withEmail(currentUser.getEmail())
-                .withIcon(ResourcesCompat.getDrawable(getResources(), R.drawable.profile, null))
+                .withIcon(ResourcesCompat.getDrawable(getResources(), currentUser.getProfilePictureResource(), null))
         );
+    }
+
+    @Subscribe
+    public void onOpenActivity(OpenActivityEvent event) {
+//        ValueAnimator anim = ValueAnimator.ofFloat(0f, 1f);
+//        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+//            @Override
+//            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+//                float slideOffset = (Float) valueAnimator.getAnimatedValue();
+//                mDrawerToggle.onDrawerSlide(drawer.getDrawerLayout(), slideOffset);
+//            }
+//        });
+//        anim.setInterpolator(new DecelerateInterpolator());
+//
+//        anim.setDuration(500);
+//        anim.start();
     }
 
     @Override

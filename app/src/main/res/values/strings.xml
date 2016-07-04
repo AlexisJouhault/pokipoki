@@ -30,4 +30,5 @@
     <string name="cards">Cards</string>
     <string name="contact">Contact</string>
     <string name="header">Header</string>
+    <string name="set_transition">settransi</string>
 </resources>

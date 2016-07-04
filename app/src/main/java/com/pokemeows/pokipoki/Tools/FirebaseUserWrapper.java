@@ -10,7 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseReferenceKeys;
 import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseHelper;
-import com.pokemeows.pokipoki.tools.database.Models.UserInfo;
+import com.pokemeows.pokipoki.tools.database.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -39,6 +39,9 @@ public class FirebaseUserWrapper {
                 if (dataSnapshot.getKey().equals(user.getUid())) {
                     userInfo = snapShotUserInfo;
                     EventBus.getDefault().post(userInfo);
+                    if (userInfo.getCards() != null) {
+                        EventBus.getDefault().post(userInfo.getCards());
+                    }
                     Log.d("DataChangeListener", "success retrieving user info");
                 }
             }
@@ -79,5 +82,12 @@ public class FirebaseUserWrapper {
 
     public String getEmail() {
         return firebaseUser.getEmail();
+    }
+
+    public int getProfilePictureResource() {
+        if (userInfo != null && userInfo.getProfileResource() != 0) {
+            return userInfo.getProfileResource();
+        }
+        return DefaultUserSettings.DEFAULT_USER_IMAGE;
     }
 }
