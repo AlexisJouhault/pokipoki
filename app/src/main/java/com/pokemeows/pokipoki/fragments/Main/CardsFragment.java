@@ -83,7 +83,7 @@ public class CardsFragment extends TabFragment {
 
                 Intent i = new Intent(getActivity(), SetActivity.class);
 
-                Pair<View, String>[] transitionPairs = new Pair[4];
+                Pair[] transitionPairs = new Pair[4];
                 transitionPairs[0] = Pair.create(getActivity().findViewById(R.id.toolbar), "toolbar"); // Transition the Toolbar
                 transitionPairs[1] = Pair.create(view, "content_area"); // Transition the content_area (This will be the content area on the detail screen)
 
@@ -100,9 +100,6 @@ public class CardsFragment extends TabFragment {
     @Subscribe
     public void onCardsUpdated(String cards) {
         Log.d(TAG, "Cards : " + cards);
-        if (cards != null) {
-
-        }
     }
 
     @Override
