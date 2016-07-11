@@ -1,12 +1,13 @@
 package com.pokemeows.pokipoki.tools.database.models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by alexisjouhault on 7/4/16.
  * ~~PokiPoki project~~
  */
-public class CardSet {
+public class CardSet implements Serializable {
 
     private String code;
     private String name;
