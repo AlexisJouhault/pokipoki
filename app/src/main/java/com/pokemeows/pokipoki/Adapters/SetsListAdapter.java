@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.TextView;
 
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.tools.database.models.CardSet;
@@ -21,17 +22,9 @@ public class SetsListAdapter extends BaseAdapter {
     private List<CardSet> cardSets;
     private Context context;
 
-    public SetsListAdapter(Context context) {
+    public SetsListAdapter(Context context, List<CardSet> sets) {
         this.context = context;
-
-        //remove test
-        cardSets = new ArrayList<>();
-        cardSets.add(new CardSet());
-        cardSets.add(new CardSet());
-        cardSets.add(new CardSet());
-        cardSets.add(new CardSet());
-        cardSets.add(new CardSet());
-        cardSets.add(new CardSet());
+        this.cardSets = sets;
     }
 
     @Override
@@ -51,13 +44,20 @@ public class SetsListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View setView = inflater.inflate(R.layout.listelem_set, parent, false);
-        generateSetView(setView, cardSets.get(position));
-        return setView;
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.listelem_set, parent, false);
+        }
+        generateSetView(convertView, cardSets.get(position));
+        return convertView;
     }
 
     public void generateSetView(View setView, CardSet cardSet) {
+        TextView name = (TextView) setView.findViewById(R.id.set_name);
+        TextView totalCards = (TextView) setView.findViewById(R.id.set_total_cards);
 
+        name.setText(cardSet.getName());
+        String cardsString = "Cards : " + cardSet.getTotalCards();
+        totalCards.setText(cardsString);
     }
 }

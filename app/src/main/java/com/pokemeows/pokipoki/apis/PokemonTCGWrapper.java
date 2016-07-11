@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class PokemonTCGWrapper {
 
+    private static final String PAGE_SIZE = "500";
     private final String HOST = "https://api.pokemontcg.io/v1/";
     private PokemonTCGService service = null;
 
@@ -50,7 +51,7 @@ public class PokemonTCGWrapper {
     }
 
     public void getSetCards(final Callback<CardsResponse> thenDo, String setId) {
-        Call<CardsResponse> call = getService().getSetCards(setId);
+        Call<CardsResponse> call = getService().getSetCards(setId, PAGE_SIZE);
         call.enqueue(new Callback<CardsResponse>() {
             @Override
             public void onResponse(Call<CardsResponse> call, Response<CardsResponse> response) {

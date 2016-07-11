@@ -23,7 +23,8 @@ public interface PokemonTCGService {
 
     @GET("cards")
     Call<CardsResponse> getSetCards(
-            @Query("setCode") String setId);
+            @Query("setCode") String setId,
+            @Query("pageSize") String pageSize);
 
     @GET("sets")
     Call<SetsResponse> getAllSets();
