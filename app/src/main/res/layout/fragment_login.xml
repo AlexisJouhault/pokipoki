@@ -65,6 +65,7 @@
 
         <android.support.v7.widget.AppCompatButton
             android:background="@color/material_red_a200"
+            android:textColor="@color/white"
             android:id="@+id/btn_login"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -74,6 +75,7 @@
 
         <TextView android:id="@+id/link_signup"
             android:background="@color/colorPrimary"
+            android:textColor="@color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:padding="30dp"
