@@ -12,24 +12,18 @@ package com.pokemeows.pokipoki.tools.database.models;
 public class Card {
 
     private String name;
-    private Long id;
-    private int rarity;
-    private int type;
-    private int imageID;
+    private String id;
+    private String imageUrl;
 
-    enum RARITY {
-        COMMON(0),
-        UNCOMMON(1),
-        RARE(2);
+    public String getId() {
+        return id;
+    }
 
-        private int value;
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-        RARITY(int val) {
-            this.value = val;
-        }
-
-        public int getValue() {
-            return value;
-        }
+    public String getName() {
+        return name;
     }
 }

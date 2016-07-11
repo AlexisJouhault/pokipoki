@@ -26,11 +26,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="@string/set_transition"
-            android:gravity="center_horizontal"
+        <GridView
+            android:id="@+id/cards_grid"
+            android:numColumns="3"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
 </RelativeLayout>
