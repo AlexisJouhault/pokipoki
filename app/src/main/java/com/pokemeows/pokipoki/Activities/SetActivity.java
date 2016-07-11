@@ -90,8 +90,13 @@ public class SetActivity extends AppCompatActivity {
         this.colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.yellow));
         this.setMainLayout.setBackground(colorDrawable);
 
+        this.progressDialog = new ProgressDialog(this,
+                R.style.AppTheme_Dark_Dialog);
+
         if (set != null) {
-            showProgressDialog("Loading set...");
+            if (!progressDialog.isShowing()) {
+                showProgressDialog("Loading set...");
+            }
             populateCards(set.getCode());
         } else {
             MessageDisplayer.showMessage(this, "Error getting set");
@@ -123,8 +128,6 @@ public class SetActivity extends AppCompatActivity {
     }
 
     protected void showProgressDialog(String message) {
-        progressDialog = new ProgressDialog(this,
-                R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
         progressDialog.setMessage(message);
         progressDialog.show();
@@ -163,18 +166,23 @@ public class SetActivity extends AppCompatActivity {
                     });
 
                 }
-                progressDialog.hide();
+                if (progressDialog.isShowing()) {
+                    progressDialog.hide();
+                }
             }
 
             @Override
             public void onFailure(Call<CardsResponse> call, Throwable t) {
                 MessageDisplayer.showMessage(SetActivity.this, t.getMessage());
-                progressDialog.hide();
+                if (progressDialog.isShowing()) {
+                    progressDialog.hide();
+                }
             }
         }, setId);
     }
 
     private void finishInStyle() {
+        progressDialog.dismiss();
         exitAnimation(new Runnable() {
             public void run() {
                 finish();
