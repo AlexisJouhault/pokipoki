@@ -87,7 +87,7 @@ public class SetActivity extends AppCompatActivity {
         this.thumbnailHeight = bundle.getInt("height");
 
         //Set the background color to black
-        this.colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.yellow));
+        this.colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey));
         this.setMainLayout.setBackground(colorDrawable);
 
         this.progressDialog = new ProgressDialog(this,

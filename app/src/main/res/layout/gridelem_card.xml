@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <com.pokemeows.pokipoki.views.CardImageView
+        android:padding="0.5dp"
         android:id="@+id/card_image"
         android:scaleType="fitCenter"
         android:layout_width="match_parent"
