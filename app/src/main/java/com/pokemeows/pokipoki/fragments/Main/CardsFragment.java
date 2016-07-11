@@ -18,7 +18,11 @@ import android.widget.ListView;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.activities.SetActivity;
 import com.pokemeows.pokipoki.adapters.SetsListAdapter;
+import com.pokemeows.pokipoki.apis.PokemonTCGWrapper;
 import com.pokemeows.pokipoki.events.OpenActivityEvent;
+import com.pokemeows.pokipoki.tools.MessageDisplayer;
+import com.pokemeows.pokipoki.tools.database.models.CardSet;
+import com.pokemeows.pokipoki.tools.database.models.SetsResponse;
 import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 
 import org.greenrobot.eventbus.EventBus;
@@ -26,6 +30,9 @@ import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by alexisjouhault on 6/24/16.
@@ -58,11 +65,31 @@ public class CardsFragment extends TabFragment {
             EventBus.getDefault().register(this);
         }
 
-        this.setsListAdapter = new SetsListAdapter(getActivity());
-        this.setsListView.setAdapter(setsListAdapter);
-        this.setsListView.setOnItemClickListener(onOpenSet);
+        populateSets();
 
         return mainView;
+    }
+
+    private void populateSets() {
+        PokemonTCGWrapper pokemonTCGWrapper = new PokemonTCGWrapper();
+        pokemonTCGWrapper.getAllSets(new Callback<SetsResponse>() {
+            @Override
+            public void onResponse(Call<SetsResponse> call, Response<SetsResponse> response) {
+                if (response.isSuccessful()) {
+                    SetsResponse setsResponse = response.body();
+                    setsListAdapter = new SetsListAdapter(getActivity(), setsResponse.getSets());
+                    setsListView.setAdapter(setsListAdapter);
+                    setsListView.setOnItemClickListener(onOpenSet);
+                } else {
+                    MessageDisplayer.showError(getActivity(), response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SetsResponse> call, Throwable t) {
+                MessageDisplayer.showMessage(getActivity(), t.getMessage());
+            }
+        });
     }
 
     private AdapterView.OnItemClickListener onOpenSet = new AdapterView.OnItemClickListener() {
@@ -73,15 +100,10 @@ public class CardsFragment extends TabFragment {
             // of both activities are defined with android:transitionName="robot"
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//                ActivityOptions options = null;
-//                options = ActivityOptions
-//                        .makeSceneTransitionAnimation(getActivity(), view, getResources().getString(R.string.set_transition));
-//                // start the new activity
-//                startActivity(intent, options.toBundle());
-
                 EventBus.getDefault().post(new OpenActivityEvent());
 
                 Intent i = new Intent(getActivity(), SetActivity.class);
+                i.putExtra("setCode", ((CardSet) setsListAdapter.getItem(position)).getCode());
 
                 Pair[] transitionPairs = new Pair[4];
                 transitionPairs[0] = Pair.create(getActivity().findViewById(R.id.toolbar), "toolbar"); // Transition the Toolbar

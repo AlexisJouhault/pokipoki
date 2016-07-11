@@ -1,25 +1,22 @@
 package com.pokemeows.pokipoki.activities;
 
-import android.animation.ValueAnimator;
 import android.os.Build;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.DecelerateInterpolator;
+import android.widget.GridView;
 
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.adapters.CardGridAdapter;
 import com.pokemeows.pokipoki.apis.PokemonTCGWrapper;
 import com.pokemeows.pokipoki.tools.MessageDisplayer;
-import com.pokemeows.pokipoki.tools.database.models.Card;
 import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
 import com.pokemeows.pokipoki.transitions.TransitionHelper;
 
-import java.util.List;
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +28,10 @@ public class SetActivity extends AppCompatActivity {
 
     private final static String TAG = SetActivity.class.toString();
 
+    private CardGridAdapter cardGridAdapter;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
+    @BindView(R.id.cards_grid) GridView cardsGridView;
 
     private ActionBarDrawerToggle toolbarDrawerToggle;
 
@@ -53,8 +53,21 @@ public class SetActivity extends AppCompatActivity {
         // set a custom shared element enter transition
         TransitionHelper.setSharedElementEnterTransition(this, R.transition.set_activity_shared_element_enter_transition);
 
-        String setId = "generations";
-        populateCards(setId);
+        String setId = getIntent().getStringExtra("setCode");
+        if (setId != null) {
+            populateCards(setId);
+        } else {
+            MessageDisplayer.showMessage(this, "Error getting set");
+            finishInStyle();
+        }
+    }
+
+    private void finishInStyle() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            finishAfterTransition();
+        } else {
+            finish();
+        }
     }
 
     private void populateCards(String setId) {
@@ -64,7 +77,11 @@ public class SetActivity extends AppCompatActivity {
             public void onResponse(Call<CardsResponse> call, Response<CardsResponse> response) {
                 if (response.isSuccessful()) {
                     CardsResponse cards = response.body();
-                    Log.d(TAG, "Just got the cards : " + cards.getCards().size());
+                    Collections.sort(cards.getCards());
+
+                    cardGridAdapter = new CardGridAdapter(SetActivity.this, cards.getCards());
+                    cardsGridView.setAdapter(cardGridAdapter);
+
                 }
             }
 
@@ -78,11 +95,7 @@ public class SetActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                finishAfterTransition();
-            } else {
-                finish();
-            }
+            finishInStyle();
         }
         return super.onOptionsItemSelected(item);
     }

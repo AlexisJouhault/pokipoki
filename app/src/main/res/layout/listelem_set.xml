@@ -5,18 +5,22 @@
     <!-- COMMENTS -->
 
     <TextView
-        android:gravity="center"
+        android:id="@+id/set_total_cards"
+        android:layout_alignParentRight="true"
         android:textStyle="bold"
         android:textSize="@dimen/text_big"
-        android:text="@string/set"
+        android:text="@string/number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:layout_alignParentRight="true"
+        android:id="@+id/set_name"
+        android:gravity=""
         android:textStyle="bold"
         android:textSize="@dimen/text_big"
-        android:text="number"
-        android:layout_width="wrap_content"
+        android:text="@string/set"
+        android:layout_toLeftOf="@id/set_total_cards"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 </RelativeLayout>

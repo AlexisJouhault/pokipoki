@@ -34,4 +34,5 @@
     <string name="header">Header</string>
     <string name="set_transition">settransi</string>
     <string name="set">Set</string>
+    <string name="number">Number</string>
 </resources>

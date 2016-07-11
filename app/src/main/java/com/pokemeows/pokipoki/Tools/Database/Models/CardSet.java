@@ -8,35 +8,34 @@ import java.util.List;
  */
 public class CardSet {
 
+    private String code;
     private String name;
-    private Long id;
-    private List<Card> cards;
+    private String series;
+    private int totalCards;
+    private boolean standardLegal;
+    private String releaseDate;
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    public void setCards(List<Card> cards) {
-        this.cards = cards;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
+    public String getCode() {
+        return code;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public int getCardCount() {
-        return cards.size();
+    public String getSeries() {
+        return series;
+    }
+
+    public boolean isStandardLegal() {
+        return standardLegal;
+    }
+
+    public int getTotalCards() {
+        return totalCards;
     }
 }
