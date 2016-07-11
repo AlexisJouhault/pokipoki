@@ -5,13 +5,16 @@ package com.pokemeows.pokipoki.tools.database.models;
  * ~~PokiPoki project~~
  */
 
+import android.os.Parcelable;
 import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 
 /***
  *  Every single card that is made will be based on this model
  *  Long id: is for the database
  */
-public class Card implements Comparable<Card> {
+public class Card implements Comparable<Card>, Serializable {
 
     private String name;
     private String id;

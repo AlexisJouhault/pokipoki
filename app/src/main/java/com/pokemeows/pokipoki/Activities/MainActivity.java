@@ -53,6 +53,30 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.toolbar) Toolbar toolbar;
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
+
+        this.fragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
+        this.fragmentViewPager.setAdapter(fragmentPagerAdapter);
+        this.fragmentViewPager.setOffscreenPageLimit(4);
+        this.tabLayout.setupWithViewPager(fragmentViewPager);
+        this.currentUser = CurrentUserInfo.getInstance().getFirebaseUser();
+
+        try {
+            buildProfile();
+            setUpNavigationDrawer();
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+
+    }
+
     private Drawer.OnDrawerItemClickListener itemClickListener = new Drawer.OnDrawerItemClickListener() {
         @Override
         public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -83,29 +107,6 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
     };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_main);
-
-        ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
-
-        this.fragmentPagerAdapter = new MainFragmentPagerAdapter(getSupportFragmentManager());
-        this.fragmentViewPager.setAdapter(fragmentPagerAdapter);
-        this.tabLayout.setupWithViewPager(fragmentViewPager);
-        this.currentUser = CurrentUserInfo.getInstance().getFirebaseUser();
-
-        try {
-            buildProfile();
-            setUpNavigationDrawer();
-        } catch (Exception e) {
-            Log.d(TAG, e.getMessage());
-        }
-
-    }
 
     private void setUpNavigationDrawer() throws Exception {
         PrimaryDrawerItem homeItem = new PrimaryDrawerItem()
