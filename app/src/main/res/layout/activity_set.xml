@@ -26,7 +26,7 @@
         <GridView
             android:id="@+id/cards_grid"
             android:stretchMode="columnWidth"
-            android:numColumns="2"
+            android:numColumns="3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </RelativeLayout>

@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class PokemonTCGWrapper {
 
-    private static final String PAGE_SIZE = "500";
+    private static final String PAGE_SIZE = "1000";
     private final String HOST = "https://api.pokemontcg.io/v1/";
     private PokemonTCGService service = null;
 
