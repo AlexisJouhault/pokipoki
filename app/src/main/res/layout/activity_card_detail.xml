@@ -6,9 +6,47 @@
     android:id="@+id/card_detail_main_layout"
     tools:context="com.pokemeows.pokipoki.activities.CardDetailActivity">
 
-    <ooo.oxo.library.widget.TouchImageView
-        android:id="@+id/card_image"
+    <com.pokemeows.pokipoki.views.ViewPagerFixed
+        android:id="@+id/cards_pager"
+        android:layout_above="@+id/card_detail_options"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/card_detail_options"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        >
+
+        <ImageView
+            android:contentDescription="@string/app_name"
+            android:id="@+id/card_favourite"
+            android:src="@drawable/ic_favorite_border_white_48dp"
+            android:padding="10dp"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <CheckBox
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/card_has"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+        <ImageView
+            android:contentDescription="@string/app_name"
+            android:id="@+id/card_want"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
 
 </RelativeLayout>

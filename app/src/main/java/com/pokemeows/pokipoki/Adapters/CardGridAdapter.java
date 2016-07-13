@@ -59,4 +59,8 @@ public class CardGridAdapter extends BaseAdapter {
                 .placeholder(R.drawable.pokemon_back)
                 .into(cardImage);
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
 }

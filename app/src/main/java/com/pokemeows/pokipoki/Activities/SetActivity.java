@@ -4,9 +4,12 @@ import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Looper;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,16 +27,21 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.adapters.CardGridAdapter;
 import com.pokemeows.pokipoki.apis.PokemonTCGWrapper;
+import com.pokemeows.pokipoki.tools.ActivityResults;
+import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.tools.MessageDisplayer;
 import com.pokemeows.pokipoki.tools.database.models.Card;
 import com.pokemeows.pokipoki.tools.database.models.CardSet;
 import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 import com.pokemeows.pokipoki.transitions.TransitionHelper;
 
 import java.util.Collections;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,6 +69,8 @@ public class SetActivity extends AppCompatActivity {
 
     private ActionBarDrawerToggle toolbarDrawerToggle;
     private ProgressDialog progressDialog;
+    private Bitmap cardBitmap;
+    private boolean isDetailActivityOpen = false;
 
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.cards_grid) GridView cardsGridView;
@@ -139,29 +149,64 @@ public class SetActivity extends AppCompatActivity {
             @Override
             public void onResponse(final Call<CardsResponse> call, Response<CardsResponse> response) {
                 if (response.isSuccessful()) {
-                    CardsResponse cards = response.body();
+                    final CardsResponse cards = response.body();
                     Collections.sort(cards.getCards());
 
                     cardGridAdapter = new CardGridAdapter(SetActivity.this, cards.getCards());
                     cardsGridView.setAdapter(cardGridAdapter);
 
                     cardsGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                            Card card = (Card) parent.getItemAtPosition(position);
+                        public void onItemClick(AdapterView<?> parent, View v, final int position, long id) {
+
+
+                            final Card card = (Card) parent.getItemAtPosition(position);
                             ImageView imageView = (ImageView) v.findViewById(R.id.card_image);
-
-                            Intent intent = new Intent(SetActivity.this, CardDetailActivity.class);
-                            int[] screenLocation = new int[2];
+                            final int[] screenLocation = new int[2];
                             imageView.getLocationOnScreen(screenLocation);
+                            final int width = imageView.getWidth();
+                            final int height = imageView.getHeight();
 
-                            //Pass the image title and url to DetailsActivity
-                            intent.putExtra("left", screenLocation[0]).
-                                    putExtra("top", screenLocation[1]).
-                                    putExtra("width", imageView.getWidth()).
-                                    putExtra("height", imageView.getHeight()).
-                                    putExtra("card", card);
+                            new AsyncTask<Void, Void, Void>() {
+                                @Override
+                                protected Void doInBackground(Void... params) {
+                                    if (!isDetailActivityOpen) {
+                                        isDetailActivityOpen = true;
+                                        if (Looper.myLooper() == null) {
+                                            Looper.prepare();
+                                        }
+                                        try {
+//                                            cardBitmap = Glide.
+//                                                    with(SetActivity.this).
+//                                                    load(card.getImageUrl()).
+//                                                    asBitmap().
+//                                                    into(-1, -1).
+//                                                    get();
 
-                            startActivity(intent);
+
+                                        } catch (final Exception e) {
+                                            Log.e(TAG, e.getMessage());
+                                        } finally {
+                                            Intent intent = new Intent(SetActivity.this, CardDetailActivity.class);
+                                            //Pass the image title and url to DetailsActivity
+                                            intent.putExtra("left", screenLocation[0]).
+                                                    putExtra("top", screenLocation[1]).
+                                                    putExtra("width", width).
+                                                    putExtra("height", height).
+                                                    putExtra("startingPosition", position).
+//                                                    putExtra("cardBitmap", cardBitmap).
+                                                    putExtra("cards", cards);
+
+                                            startActivityForResult(intent, ActivityResults.OPEN_CARD_DETAIL);
+
+                                        }
+                                    }
+                                    return null;
+                                }
+                                @Override
+                                protected void onPostExecute(Void dummy) {
+
+                                }
+                            }.execute();
                         }
                     });
 
@@ -179,6 +224,13 @@ public class SetActivity extends AppCompatActivity {
                 }
             }
         }, setId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ActivityResults.OPEN_CARD_DETAIL) {
+            isDetailActivityOpen = false;
+        }
     }
 
     private void finishInStyle() {

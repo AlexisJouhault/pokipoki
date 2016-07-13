@@ -2,8 +2,10 @@ package com.pokemeows.pokipoki.activities;
 
 import android.animation.ObjectAnimator;
 import android.animation.TimeInterpolator;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,11 +15,18 @@ import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.adapters.CardDetailPagerAdapter;
+import com.pokemeows.pokipoki.tools.MessageDisplayer;
 import com.pokemeows.pokipoki.tools.database.models.Card;
+import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
+import com.pokemeows.pokipoki.views.ViewPagerFixed;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +35,9 @@ import ooo.oxo.library.widget.TouchImageView;
 public class CardDetailActivity extends AppCompatActivity {
 
     private static final long ANIM_DURATION = 300L;
-    private Card card;
+    private List<Card> cards;
+    private int startingPosition = 0;
+    private CardDetailPagerAdapter cardAdapter;
 
     private ColorDrawable colorDrawable;
     private float mWidthScale;
@@ -39,7 +50,8 @@ public class CardDetailActivity extends AppCompatActivity {
     private int thumbnailHeight;
 
     @BindView(R.id.card_detail_main_layout) RelativeLayout mainLayout;
-    @BindView(R.id.card_image) TouchImageView cardImageView;
+    @BindView(R.id.cards_pager) ViewPagerFixed cardViewPager;
+    @BindView(R.id.card_detail_options) LinearLayout cardOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +66,15 @@ public class CardDetailActivity extends AppCompatActivity {
         }
 
         Bundle bundle = getIntent().getExtras();
-        this.card = (Card) bundle.getSerializable("card");
+        Bitmap cardBitmap = (Bitmap) bundle.get("cardBitmap");
+        CardsResponse cardsResponse = (CardsResponse) bundle.getSerializable("cards");
+        if (cardsResponse != null) {
+            this.cards = cardsResponse.getCards();
+        } else {
+            MessageDisplayer.showMessage(this, "Error loading images");
+            finish();
+        }
+        this.startingPosition = bundle.getInt("startingPosition");
         this.thumbnailTop = bundle.getInt("top");
         this.thumbnailLeft = bundle.getInt("left");
         this.thumbnailWidth = bundle.getInt("width");
@@ -64,28 +84,27 @@ public class CardDetailActivity extends AppCompatActivity {
         this.colorDrawable = new ColorDrawable(Color.BLACK);
         this.mainLayout.setBackground(colorDrawable);
 
-        Glide.with(this)
-                .load(card.getImageUrl())
-                .placeholder(R.drawable.pokemon_back)
-                .into(cardImageView);
+        cardAdapter = new CardDetailPagerAdapter(this, cards);
+        cardViewPager.setAdapter(cardAdapter);
+        cardViewPager.setCurrentItem(startingPosition);
 
 
         if (savedInstanceState == null) {
-            ViewTreeObserver observer = cardImageView.getViewTreeObserver();
+            ViewTreeObserver observer = cardViewPager.getViewTreeObserver();
             observer.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
 
                 @Override
                 public boolean onPreDraw() {
-                    cardImageView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    cardViewPager.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     int[] screenLocation = new int[2];
-                    cardImageView.getLocationOnScreen(screenLocation);
+                    cardViewPager.getLocationOnScreen(screenLocation);
                     mLeftDelta = thumbnailLeft - screenLocation[0];
                     mTopDelta = thumbnailTop - screenLocation[1];
 
                     // Scale factors to make the large version the same size as the thumbnail
-                    mWidthScale = (float) thumbnailWidth / cardImageView.getWidth();
-                    mHeightScale = (float) thumbnailHeight / cardImageView.getHeight();
+                    mWidthScale = (float) thumbnailWidth / cardViewPager.getWidth();
+                    mHeightScale = (float) thumbnailHeight / cardViewPager.getHeight();
 
                     enterAnimation();
                     return true;
@@ -104,19 +123,21 @@ public class CardDetailActivity extends AppCompatActivity {
         // Set starting values for properties we're going to animate. These
         // values scale and position the full size version down to the thumbnail
         // size/location, from which we'll animate it back up
-        cardImageView.setPivotX(0);
-        cardImageView.setPivotY(0);
-        cardImageView.setScaleX(mWidthScale);
-        cardImageView.setScaleY(mHeightScale);
-        cardImageView.setTranslationX(mLeftDelta);
-        cardImageView.setTranslationY(mTopDelta);
+        cardViewPager.setPivotX(0);
+        cardViewPager.setPivotY(0);
+        cardViewPager.setScaleX(mWidthScale);
+        cardViewPager.setScaleY(mHeightScale);
+        cardViewPager.setTranslationX(mLeftDelta);
+        cardViewPager.setTranslationY(mTopDelta);
 
         // interpolator where the rate of change starts out quickly and then decelerates.
         TimeInterpolator sDecelerator = new DecelerateInterpolator();
 
         // Animate scale and translation to go from thumbnail to full size
-        cardImageView.animate().setDuration(ANIM_DURATION).scaleX(1).scaleY(1).
+        cardViewPager.animate().setDuration(ANIM_DURATION).scaleX(1).scaleY(1).
                 translationX(0).translationY(0).setInterpolator(sDecelerator);
+        cardOptions.setAlpha(0f);
+        cardOptions.animate().setDuration(ANIM_DURATION).alpha(1);
 
         // Fade in the black background
         ObjectAnimator bgAnim = ObjectAnimator.ofInt(colorDrawable, "alpha", 0, 255);
@@ -135,14 +156,16 @@ public class CardDetailActivity extends AppCompatActivity {
     public void exitAnimation(final Runnable endAction) {
 
         TimeInterpolator sInterpolator = new AccelerateInterpolator();
-        cardImageView.animate().setDuration(ANIM_DURATION).scaleX(mWidthScale).scaleY(mHeightScale).
-                translationX(mLeftDelta).translationY(mTopDelta)
-                .setInterpolator(sInterpolator).withEndAction(endAction);
+//        cardViewPager.animate().setDuration(ANIM_DURATION).scaleX(mWidthScale).scaleY(mHeightScale).
+//                translationX(mLeftDelta).translationY(mTopDelta)
+//                .setInterpolator(sInterpolator).withEndAction(endAction);
+        mainLayout.animate().setDuration(ANIM_DURATION).alpha(0).withEndAction(endAction);
 
         // Fade out background
         ObjectAnimator bgAnim = ObjectAnimator.ofInt(colorDrawable, "alpha", 0);
         bgAnim.setDuration(ANIM_DURATION);
         bgAnim.start();
+
     }
 
     @Override
