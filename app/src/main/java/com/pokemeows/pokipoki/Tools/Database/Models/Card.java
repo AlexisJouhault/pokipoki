@@ -37,6 +37,22 @@ public class Card implements Comparable<Card>, Serializable {
         return number;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     @Override
     public int compareTo(@NonNull Card another) {
         int myNumber = getNumberFromString(this.getNumber().toCharArray());
@@ -70,4 +86,5 @@ public class Card implements Comparable<Card>, Serializable {
         numberString = numberString.substring(startCut, endCut);
         return Integer.parseInt(numberString) + outOfSet;
     }
+
 }

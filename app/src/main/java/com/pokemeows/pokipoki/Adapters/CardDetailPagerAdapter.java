@@ -5,12 +5,16 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.tools.database.models.Card;
+import com.pokemeows.pokipoki.tools.database.models.CardOptions;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 
 import java.util.List;
 
@@ -52,6 +56,7 @@ public class CardDetailPagerAdapter extends PagerAdapter {
                 .load(card.getImageUrl())
                 .placeholder(R.drawable.pokemon_back)
                 .into(imageView);
+
 
 
         container.addView(itemView);

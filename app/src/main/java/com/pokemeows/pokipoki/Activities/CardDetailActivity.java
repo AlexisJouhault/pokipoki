@@ -21,15 +21,19 @@ import android.widget.RelativeLayout;
 import com.bumptech.glide.Glide;
 import com.pokemeows.pokipoki.R;
 import com.pokemeows.pokipoki.adapters.CardDetailPagerAdapter;
+import com.pokemeows.pokipoki.tools.FirebaseUserWrapper;
 import com.pokemeows.pokipoki.tools.MessageDisplayer;
 import com.pokemeows.pokipoki.tools.database.models.Card;
+import com.pokemeows.pokipoki.tools.database.models.CardOptions;
 import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
+import com.pokemeows.pokipoki.tools.session.CurrentUserInfo;
 import com.pokemeows.pokipoki.views.ViewPagerFixed;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import ooo.oxo.library.widget.TouchImageView;
 
 public class CardDetailActivity extends AppCompatActivity {
@@ -38,6 +42,7 @@ public class CardDetailActivity extends AppCompatActivity {
     private List<Card> cards;
     private int startingPosition = 0;
     private CardDetailPagerAdapter cardAdapter;
+    private FirebaseUserWrapper userWrapper;
 
     private ColorDrawable colorDrawable;
     private float mWidthScale;
@@ -52,6 +57,24 @@ public class CardDetailActivity extends AppCompatActivity {
     @BindView(R.id.card_detail_main_layout) RelativeLayout mainLayout;
     @BindView(R.id.cards_pager) ViewPagerFixed cardViewPager;
     @BindView(R.id.card_detail_options) LinearLayout cardOptions;
+    @BindView(R.id.card_favourite) ImageView cardFavourite;
+
+    private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+        @Override
+        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        public void onPageSelected(int position) {
+            changeCardOptions(position);
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int state) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +97,9 @@ public class CardDetailActivity extends AppCompatActivity {
             MessageDisplayer.showMessage(this, "Error loading images");
             finish();
         }
+        this.userWrapper = CurrentUserInfo.getInstance().getFirebaseUser();
         this.startingPosition = bundle.getInt("startingPosition");
+        changeCardOptions(this.startingPosition);
         this.thumbnailTop = bundle.getInt("top");
         this.thumbnailLeft = bundle.getInt("left");
         this.thumbnailWidth = bundle.getInt("width");
@@ -87,6 +112,7 @@ public class CardDetailActivity extends AppCompatActivity {
         cardAdapter = new CardDetailPagerAdapter(this, cards);
         cardViewPager.setAdapter(cardAdapter);
         cardViewPager.setCurrentItem(startingPosition);
+        cardViewPager.addOnPageChangeListener(onPageChangeListener);
 
 
         if (savedInstanceState == null) {
@@ -112,6 +138,46 @@ public class CardDetailActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    @OnClick(R.id.card_favourite)
+    public void onFavouriteClick() {
+        userWrapper.addFavouriteCard(cards.get(cardViewPager.getCurrentItem()));
+        changeCardOptions(cardViewPager.getCurrentItem());
+    }
+
+    @OnClick(R.id.card_has)
+    public void onHaveCardClick() {
+        userWrapper.addHaveCard(cards.get(cardViewPager.getCurrentItem()));
+        changeCardOptions(cardViewPager.getCurrentItem());
+    }
+
+    @OnClick(R.id.card_want)
+    public void onCardWantClick() {
+        userWrapper.addWantCard(cards.get(cardViewPager.getCurrentItem()));
+        changeCardOptions(cardViewPager.getCurrentItem());
+    }
+
+    private void changeCardOptions(int position) {
+        Card card = cards.get(position);
+        int cardOptions = userWrapper.getCardOption(card.getId());
+
+        if (CardOptions.isOptionSelected(cardOptions, CardOptions.FAVOURITE)) {
+            Glide.with(CardDetailActivity.this)
+                    .load(R.drawable.ic_favorite_white_48dp)
+                    .into(cardFavourite);
+        } else {
+            Glide.with(CardDetailActivity.this)
+                    .load(R.drawable.ic_favorite_border_white_48dp)
+                    .into(cardFavourite);
+
+        }
+        if (CardOptions.isOptionSelected(cardOptions, CardOptions.HAVE)) {
+
+        }
+        if (CardOptions.isOptionSelected(cardOptions, CardOptions.WANT)) {
+
+        }
     }
 
     /**

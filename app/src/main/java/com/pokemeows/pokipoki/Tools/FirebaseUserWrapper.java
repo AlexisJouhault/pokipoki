@@ -8,11 +8,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
+import com.pokemeows.pokipoki.tools.database.models.Card;
+import com.pokemeows.pokipoki.tools.database.models.CardOptions;
 import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseReferenceKeys;
 import com.pokemeows.pokipoki.tools.firebase.FirebaseDatabaseHelper;
 import com.pokemeows.pokipoki.tools.database.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
 
 /**
  * Created by alexisjouhault on 6/27/16.
@@ -40,6 +44,7 @@ public class FirebaseUserWrapper {
                     userInfo = snapShotUserInfo;
                     EventBus.getDefault().post(userInfo);
                     if (userInfo.getCards() != null) {
+                        userInfo.processCardsInfo();
                         EventBus.getDefault().post(userInfo.getCards());
                     }
                     Log.d("DataChangeListener", "success retrieving user info");
@@ -89,5 +94,25 @@ public class FirebaseUserWrapper {
             return userInfo.getProfileResource();
         }
         return DefaultUserSettings.DEFAULT_USER_IMAGE;
+    }
+
+    public void addFavouriteCard(Card card) {
+        userInfo.addCardOption(card.getId(), CardOptions.FAVOURITE);
+        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(card.getId());
+    }
+
+    public void addHaveCard(Card card) {
+
+    }
+
+    public void addWantCard(Card card) {
+
+    }
+
+    public int getCardOption(String cardId) {
+        if (userInfo.getUserCardsOptions().containsKey(cardId)) {
+            return userInfo.getUserCardsOptions().get(cardId);
+        }
+        return 0;
     }
 }
