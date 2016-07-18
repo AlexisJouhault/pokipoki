@@ -98,7 +98,7 @@ public class FirebaseUserWrapper {
 
     public void addFavouriteCard(Card card) {
         userInfo.addCardOption(card.getId(), CardOptions.FAVOURITE);
-        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(card.getId());
+        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
     }
 
     public void addHaveCard(Card card) {
