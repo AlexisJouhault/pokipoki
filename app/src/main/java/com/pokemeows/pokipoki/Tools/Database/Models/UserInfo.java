@@ -4,6 +4,7 @@ import com.orm.SugarRecord;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -81,23 +82,47 @@ public class UserInfo extends SugarRecord {
     }
 
     public void addCardOption(String id, int option) {
+        //Check if map contains cardId
         if (userCardsOptions.containsKey(id)) {
+            //if it does get options for this card
             int options = userCardsOptions.get(id);
 
+            //check if option is already selected
             if (CardOptions.isOptionSelected(options, option)) {
                 options -= option;
-                userCardsOptions.put(id, options);
+                if (options == 0) {
+                    //remove card from map if no options left
+                    userCardsOptions.remove(id);
+                } else {
+                    //update card options
+                    userCardsOptions.put(id, options);
+                }
             } else {
+                //add new option
                 options += option;
                 userCardsOptions.put(id, options);
             }
 
         } else {
+            //if it doesn't add new option for this card
             userCardsOptions.put(id, option);
         }
     }
 
     public HashMap<String, Integer> getUserCardsOptions() {
         return userCardsOptions;
+    }
+
+    public String getFormatedOptions() {
+        String formatedOptions = "";
+
+        Iterator iterator = userCardsOptions.keySet().iterator();
+        while (iterator.hasNext()) {
+            String cardId = (String) iterator.next();
+            int options = userCardsOptions.get(cardId);
+            formatedOptions += cardId + ":" + options + ";";
+        }
+
+        return formatedOptions;
     }
 }

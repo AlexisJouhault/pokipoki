@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -57,7 +58,8 @@ public class CardDetailActivity extends AppCompatActivity {
     @BindView(R.id.card_detail_main_layout) RelativeLayout mainLayout;
     @BindView(R.id.cards_pager) ViewPagerFixed cardViewPager;
     @BindView(R.id.card_detail_options) LinearLayout cardOptions;
-    @BindView(R.id.card_favourite) ImageView cardFavourite;
+    @BindView(R.id.card_favourite_ico) ImageView cardFavourite;
+    @BindView(R.id.card_has) CheckBox cardHas;
 
     private ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override
@@ -140,7 +142,7 @@ public class CardDetailActivity extends AppCompatActivity {
 
     }
 
-    @OnClick(R.id.card_favourite)
+    @OnClick(R.id.card_favourite_ico)
     public void onFavouriteClick() {
         userWrapper.addFavouriteCard(cards.get(cardViewPager.getCurrentItem()));
         changeCardOptions(cardViewPager.getCurrentItem());
@@ -173,9 +175,9 @@ public class CardDetailActivity extends AppCompatActivity {
 
         }
         if (CardOptions.isOptionSelected(cardOptions, CardOptions.HAVE)) {
-
+            cardHas.setChecked(true);
         } else {
-
+            cardHas.setChecked(false);
         }
         if (CardOptions.isOptionSelected(cardOptions, CardOptions.WANT)) {
 
@@ -226,9 +228,6 @@ public class CardDetailActivity extends AppCompatActivity {
     public void exitAnimation(final Runnable endAction) {
 
         TimeInterpolator sInterpolator = new AccelerateInterpolator();
-//        cardViewPager.animate().setDuration(ANIM_DURATION).scaleX(mWidthScale).scaleY(mHeightScale).
-//                translationX(mLeftDelta).translationY(mTopDelta)
-//                .setInterpolator(sInterpolator).withEndAction(endAction);
         mainLayout.animate().setDuration(ANIM_DURATION).alpha(0).withEndAction(endAction);
 
         // Fade out background

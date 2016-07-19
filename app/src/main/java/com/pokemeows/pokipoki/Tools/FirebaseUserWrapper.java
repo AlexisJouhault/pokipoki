@@ -102,7 +102,8 @@ public class FirebaseUserWrapper {
     }
 
     public void addHaveCard(Card card) {
-
+        userInfo.addCardOption(card.getId(), CardOptions.HAVE);
+        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
     }
 
     public void addWantCard(Card card) {

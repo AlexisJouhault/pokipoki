@@ -12,6 +12,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:layout_below="@id/cards_pager"
+        android:src="@color/white"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp" />
+
     <LinearLayout
         android:id="@+id/card_detail_options"
         android:orientation="horizontal"
@@ -21,11 +29,11 @@
         >
 
         <ImageView
+            android:id="@+id/card_favourite_ico"
+            android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:id="@+id/card_favourite"
             android:src="@drawable/ic_favorite_border_white_48dp"
             android:padding="10dp"
-            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <RelativeLayout
