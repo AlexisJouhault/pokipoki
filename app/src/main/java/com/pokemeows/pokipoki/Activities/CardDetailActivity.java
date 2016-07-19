@@ -238,6 +238,12 @@ public class CardDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        userWrapper.saveChanges();
+        super.onPause();
+    }
+
+    @Override
     public void onBackPressed() {
         exitAnimation(new Runnable() {
             public void run() {

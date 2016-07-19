@@ -96,18 +96,20 @@ public class FirebaseUserWrapper {
         return DefaultUserSettings.DEFAULT_USER_IMAGE;
     }
 
+    private void saveOptionsChanges() {
+        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
+    }
+
     public void addFavouriteCard(Card card) {
         userInfo.addCardOption(card.getId(), CardOptions.FAVOURITE);
-        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
     }
 
     public void addHaveCard(Card card) {
         userInfo.addCardOption(card.getId(), CardOptions.HAVE);
-        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
     }
 
     public void addWantCard(Card card) {
-
+        userInfo.addCardOption(card.getId(), CardOptions.WANT);
     }
 
     public int getCardOption(String cardId) {
@@ -115,5 +117,10 @@ public class FirebaseUserWrapper {
             return userInfo.getUserCardsOptions().get(cardId);
         }
         return 0;
+    }
+
+    public void saveChanges() {
+        //add all database changes here
+        saveOptionsChanges();
     }
 }
