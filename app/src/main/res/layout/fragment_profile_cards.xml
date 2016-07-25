@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.pokemeows.pokipoki.views.NotifyingScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:id="@+id/scrollview"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/header_height"
+            />
+
+        <TextView
+            android:text="CARDS"
+            android:layout_width="match_parent"
+            android:layout_height="800dp" />
+
+
+    </LinearLayout>
+
+</com.pokemeows.pokipoki.views.NotifyingScrollView>

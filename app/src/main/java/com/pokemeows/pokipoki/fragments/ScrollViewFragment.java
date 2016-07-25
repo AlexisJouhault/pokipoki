@@ -23,20 +23,21 @@ import butterknife.ButterKnife;
 
 public class ScrollViewFragment extends ScrollTabHolderFragment implements NotifyingScrollView.OnScrollChangedListener {
 
-    private static final String ARG_POSITION = "position";
+    protected static final String ARG_POSITION = "position";
+    protected static final int CONTACT_POSITION = 2;
+    protected static final int CARD_POSITION = 1;
+    protected static final int INFO_POSITION = 0;
+
+    private String title;
 
 
 
-    TextView title;
     TextView titleShortDescription;
     TextView titleDescription;
     TextView textSendEmail;
     TextView textContact;
     TextView textEmail;
-    @BindView(R.id.layout1) LinearLayout layout1;
-    @BindView(R.id.titleImage) ImageView titleImage;
-    @BindView(R.id.scrollview) NotifyingScrollView mScrollView;
-    @BindView(R.id.cardView) CardView cardView;
+    @BindView(R.id.scrollview) protected NotifyingScrollView mScrollView;
 
     private int mPosition;
 
@@ -62,22 +63,6 @@ public class ScrollViewFragment extends ScrollTabHolderFragment implements Notif
         ButterKnife.bind(this, v);
 
         mScrollView.setOnScrollChangedListener(this);
-        cardView.setPadding(30,30,30,30);
-
-
-        if (mPosition==0){
-            layout1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.pink_transparent));
-            titleImage.setImageResource(R.drawable.poke);}
-        if (mPosition==1) {
-            layout1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.green_transparent));
-            titleImage.setImageResource(R.drawable.poke);
-        }
-        if (mPosition==2) {
-            layout1.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.blue_transparent));
-            titleImage.setImageResource(R.drawable.poke);
-
-        }
-
 
         return v;
     }
@@ -104,6 +89,11 @@ public class ScrollViewFragment extends ScrollTabHolderFragment implements Notif
 
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-
+    public String getTitle() {
+        return title;
+    }
 }

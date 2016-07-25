@@ -83,18 +83,19 @@ public class SetActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
         Bundle bundle = getIntent().getExtras();
         this.set = (CardSet) bundle.getSerializable("set");
         this.thumbnailTop = bundle.getInt("top");
         this.thumbnailLeft = bundle.getInt("left");
         this.thumbnailWidth = bundle.getInt("width");
         this.thumbnailHeight = bundle.getInt("height");
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setTitle(this.set.getName());
+        }
 
         //Set the background color to black
         this.colorDrawable = new ColorDrawable(ContextCompat.getColor(this, R.color.light_grey));

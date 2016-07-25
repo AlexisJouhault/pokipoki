@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.astuetz.PagerSlidingTabStrip;
 import com.nineoldandroids.view.ViewHelper;
 import com.pokemeows.pokipoki.R;
+import com.pokemeows.pokipoki.adapters.ProfilePagerAdapter;
 import com.pokemeows.pokipoki.fragments.ScrollTabHolderFragment;
 import com.pokemeows.pokipoki.fragments.ScrollViewFragment;
 import com.pokemeows.pokipoki.tools.AlphaForegroundColorSpan;
@@ -51,7 +52,7 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
     private RectF mRect2 = new RectF();
     private CurrentUserInfo currentUserInfo = CurrentUserInfo.getInstance();
 
-    private PagerAdapter mPagerAdapter;
+    private ProfilePagerAdapter mPagerAdapter;
     @BindView(R.id.header) View mHeader;
     @BindView(R.id.tabs) PagerSlidingTabStrip mPagerSlidingTabStrip;
     @BindView(R.id.pager) ViewPager mViewPager;
@@ -81,7 +82,7 @@ public class ProfileActivity extends AppCompatActivity implements ScrollTabHolde
 
         title.setText(currentUserInfo.getFirebaseUser().getName());
         mViewPager.setOffscreenPageLimit(4);
-        mPagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        mPagerAdapter = new ProfilePagerAdapter(getSupportFragmentManager());
         mPagerAdapter.setTabHolderScrollingContent(this);
         mViewPager.setAdapter(mPagerAdapter);
         mPagerSlidingTabStrip.setViewPager(mViewPager);
