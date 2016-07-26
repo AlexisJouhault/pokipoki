@@ -1,11 +1,19 @@
 package com.pokemeows.pokipoki.tools.database.models;
 
 import com.orm.SugarRecord;
+import com.pokemeows.pokipoki.apis.PokemonTCGWrapper;
+import com.pokemeows.pokipoki.events.SingleCardRequest;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by alexisjouhault on 6/27/16.
@@ -113,16 +121,65 @@ public class UserInfo extends SugarRecord {
         return userCardsOptions;
     }
 
-    public String getFormatedOptions() {
-        String formatedOptions = "";
+    public String getFormattedOptions() {
+        String formattedOptions = "";
 
-        Iterator iterator = userCardsOptions.keySet().iterator();
-        while (iterator.hasNext()) {
-            String cardId = (String) iterator.next();
+        for (String cardId : userCardsOptions.keySet()) {
             int options = userCardsOptions.get(cardId);
-            formatedOptions += cardId + ":" + options + ";";
+            formattedOptions += cardId + ":" + options + ";";
         }
 
-        return formatedOptions;
+        return formattedOptions;
+    }
+
+    public void getCardsWithOption(final int option) {
+
+        for (String cardId : userCardsOptions.keySet()) {
+            int options = userCardsOptions.get(cardId);
+
+            if (CardOptions.isOptionSelected(options, option)) {
+                PokemonTCGWrapper tcgWrapper = new PokemonTCGWrapper();
+                tcgWrapper.getCard(cardId, new Callback<SingleCardResponse>() {
+                    @Override
+                    public void onResponse(Call<SingleCardResponse> call, Response<SingleCardResponse> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            EventBus.getDefault().post(new SingleCardRequest(response.body().getCard(), option));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SingleCardResponse> call, Throwable t) {
+                    }
+                });
+            }
+        }
+    }
+
+    public void getCardsByOptions() {
+        for (String cardId : userCardsOptions.keySet()) {
+            final int options = userCardsOptions.get(cardId);
+
+            PokemonTCGWrapper tcgWrapper = new PokemonTCGWrapper();
+            tcgWrapper.getCard(cardId, new Callback<SingleCardResponse>() {
+                @Override
+                public void onResponse(Call<SingleCardResponse> call, Response<SingleCardResponse> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (CardOptions.isOptionSelected(options, CardOptions.FAVOURITE)) {
+                            EventBus.getDefault().post(new SingleCardRequest(response.body().getCard(), CardOptions.FAVOURITE));
+                        }
+                        if (CardOptions.isOptionSelected(options, CardOptions.WANT)) {
+                            EventBus.getDefault().post(new SingleCardRequest(response.body().getCard(), CardOptions.WANT));
+                        }
+                        if (CardOptions.isOptionSelected(options, CardOptions.HAVE)) {
+                            EventBus.getDefault().post(new SingleCardRequest(response.body().getCard(), CardOptions.HAVE));
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SingleCardResponse> call, Throwable t) {
+                }
+            });
+        }
     }
 }

@@ -16,7 +16,7 @@ import com.pokemeows.pokipoki.tools.database.models.UserInfo;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by alexisjouhault on 6/27/16.
@@ -97,7 +97,7 @@ public class FirebaseUserWrapper {
     }
 
     private void saveOptionsChanges() {
-        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormatedOptions());
+        userReference.child(FirebaseDatabaseReferenceKeys.CARDS).setValue(userInfo.getFormattedOptions());
     }
 
     public void addFavouriteCard(Card card) {
@@ -122,5 +122,9 @@ public class FirebaseUserWrapper {
     public void saveChanges() {
         //add all database changes here
         saveOptionsChanges();
+    }
+
+    public void getCardsByOptions() {
+        userInfo.getCardsByOptions();
     }
 }

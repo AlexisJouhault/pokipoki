@@ -35,4 +35,7 @@
     <string name="set_transition">settransi</string>
     <string name="set">Set</string>
     <string name="number">Number</string>
+    <string name="favourite">Favorite Cards</string>
+    <string name="separator">Separator</string>
+    <string name="i_have">Cards I Have</string>
 </resources>

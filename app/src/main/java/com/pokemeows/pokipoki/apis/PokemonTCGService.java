@@ -4,6 +4,7 @@ import com.pokemeows.pokipoki.tools.database.models.Card;
 import com.pokemeows.pokipoki.tools.database.models.CardSet;
 import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
 import com.pokemeows.pokipoki.tools.database.models.SetsResponse;
+import com.pokemeows.pokipoki.tools.database.models.SingleCardResponse;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public interface PokemonTCGService {
     Call<CardsResponse> getSetCards(
             @Query("setCode") String setId,
             @Query("pageSize") String pageSize);
+
+    @GET("cards/{cardId}")
+    Call<SingleCardResponse> getCard(@Path("cardId") String cardId);
 
     @GET("sets")
     Call<SetsResponse> getAllSets();

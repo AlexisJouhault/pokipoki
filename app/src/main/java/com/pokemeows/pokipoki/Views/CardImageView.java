@@ -10,6 +10,9 @@ import android.widget.ImageView;
  */
 public class CardImageView extends ImageView {
 
+    public static final int REAL_HEIGHT = 880;
+    public static final int REAL_WIDTH = 630;
+
     public CardImageView(Context context) {
         super(context);
     }
@@ -25,8 +28,6 @@ public class CardImageView extends ImageView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int realWidth = 630;
-        int realHeight = 880;
-        setMeasuredDimension(getMeasuredWidth(), (getMeasuredWidth() * realHeight / realWidth)); //Snap to width
+        setMeasuredDimension(getMeasuredWidth(), (getMeasuredWidth() * REAL_HEIGHT / REAL_WIDTH)); //Snap to width
     }
 }

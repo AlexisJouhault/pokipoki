@@ -1,9 +1,11 @@
 package com.pokemeows.pokipoki.apis;
 
+import com.pokemeows.pokipoki.fragments.main.CardsFragment;
 import com.pokemeows.pokipoki.tools.database.models.Card;
 import com.pokemeows.pokipoki.tools.database.models.CardSet;
 import com.pokemeows.pokipoki.tools.database.models.CardsResponse;
 import com.pokemeows.pokipoki.tools.database.models.SetsResponse;
+import com.pokemeows.pokipoki.tools.database.models.SingleCardResponse;
 
 import java.util.List;
 
@@ -37,47 +39,22 @@ public class PokemonTCGWrapper {
 
     public void getAllCards(final Callback<CardsResponse> thenDo) {
         Call<CardsResponse> call = getService().getAllCards();
-        call.enqueue(new Callback<CardsResponse>() {
-            @Override
-            public void onResponse(Call<CardsResponse> call, Response<CardsResponse> response) {
-                thenDo.onResponse(call, response);
-            }
-
-            @Override
-            public void onFailure(Call<CardsResponse> call, Throwable t) {
-                thenDo.onFailure(call, t);
-            }
-        });
+        call.enqueue(thenDo);
     }
 
     public void getSetCards(final Callback<CardsResponse> thenDo, String setId) {
         Call<CardsResponse> call = getService().getSetCards(setId, PAGE_SIZE);
-        call.enqueue(new Callback<CardsResponse>() {
-            @Override
-            public void onResponse(Call<CardsResponse> call, Response<CardsResponse> response) {
-                thenDo.onResponse(call, response);
-            }
-
-            @Override
-            public void onFailure(Call<CardsResponse> call, Throwable t) {
-                thenDo.onFailure(call, t);
-            }
-        });
+        call.enqueue(thenDo);
     }
 
     public void getAllSets(final Callback<SetsResponse> thenDo) {
         Call<SetsResponse> call = getService().getAllSets();
-        call.enqueue(new Callback<SetsResponse>() {
-            @Override
-            public void onResponse(Call<SetsResponse> call, Response<SetsResponse> response) {
-                thenDo.onResponse(call, response);
-            }
+        call.enqueue(thenDo);
+    }
 
-            @Override
-            public void onFailure(Call<SetsResponse> call, Throwable t) {
-                thenDo.onFailure(call, t);
-            }
-        });
+    public void getCard(String cardId, final Callback<SingleCardResponse> thenDo) {
+        Call<SingleCardResponse> call = getService().getCard(cardId);
+        call.enqueue(thenDo);
     }
 
 }

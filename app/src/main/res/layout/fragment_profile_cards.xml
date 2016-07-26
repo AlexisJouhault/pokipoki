@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.pokemeows.pokipoki.views.NotifyingScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:id="@+id/scrollview"
@@ -17,10 +16,44 @@
             />
 
         <TextView
-            android:text="CARDS"
+            android:padding="10dp"
+            android:text="@string/favourite"
             android:layout_width="match_parent"
-            android:layout_height="800dp" />
+            android:layout_height="wrap_content" />
 
+        <ImageView
+            android:contentDescription="@string/separator"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TableLayout
+            android:id="@+id/profile_favourite_cards"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:padding="10dp"
+            android:text="@string/i_have"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ImageView
+            android:contentDescription="@string/separator"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:src="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <TableLayout
+            android:id="@+id/profile_cards_i_have"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

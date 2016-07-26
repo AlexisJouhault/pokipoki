@@ -5,6 +5,7 @@ import java.util.List;
 
 /**
  * Created by alexisjouhault on 7/10/16.
+ *
  */
 public class CardsResponse implements Serializable {
 

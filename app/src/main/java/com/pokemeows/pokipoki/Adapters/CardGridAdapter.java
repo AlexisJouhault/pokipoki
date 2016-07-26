@@ -63,4 +63,9 @@ public class CardGridAdapter extends BaseAdapter {
     public List<Card> getCards() {
         return cards;
     }
+
+    public void addCard(Card card) {
+        cards.add(card);
+        notifyDataSetChanged();
+    }
 }
