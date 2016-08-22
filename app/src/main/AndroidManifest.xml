@@ -18,12 +18,13 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.ProfileActivity" />
-        <activity android:name=".activities.SetActivity"
-            android:theme="@style/Transparent"
-            />
-        <activity android:name=".activities.CardDetailActivity"
-            android:theme="@style/Transparent"
-            />
+        <activity
+            android:name=".activities.SetActivity"
+            android:theme="@style/Transparent" />
+        <activity
+            android:name=".activities.CardDetailActivity"
+            android:theme="@style/Transparent" />
+        <activity android:name=".activities.CreateEventActivity"></activity>
     </application>
 
 </manifest>

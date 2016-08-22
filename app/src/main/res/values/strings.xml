@@ -38,4 +38,11 @@
     <string name="favourite">Favorite Cards</string>
     <string name="separator">Separator</string>
     <string name="i_have">Cards I Have</string>
+
+    <string name="event_name">Event name</string>
+    <string name="event_date">Date of event</string>
+    <string name="submit">SUBMIT</string>
+    <string name="submission">Thanks for submitting your event!</string>
+
+
 </resources>
