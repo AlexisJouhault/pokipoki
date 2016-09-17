@@ -175,31 +175,17 @@ public class SetActivity extends AppCompatActivity {
                                         if (Looper.myLooper() == null) {
                                             Looper.prepare();
                                         }
-                                        try {
-//                                            cardBitmap = Glide.
-//                                                    with(SetActivity.this).
-//                                                    load(card.getImageUrl()).
-//                                                    asBitmap().
-//                                                    into(-1, -1).
-//                                                    get();
 
+                                        Intent intent = new Intent(SetActivity.this, CardDetailActivity.class);
+                                        //Pass the image title and url to DetailsActivity
+                                        intent.putExtra("left", screenLocation[0]).
+                                                putExtra("top", screenLocation[1]).
+                                                putExtra("width", width).
+                                                putExtra("height", height).
+                                                putExtra("startingPosition", position).
+                                                putExtra("cards", cards);
 
-                                        } catch (final Exception e) {
-                                            Log.e(TAG, e.getMessage());
-                                        } finally {
-                                            Intent intent = new Intent(SetActivity.this, CardDetailActivity.class);
-                                            //Pass the image title and url to DetailsActivity
-                                            intent.putExtra("left", screenLocation[0]).
-                                                    putExtra("top", screenLocation[1]).
-                                                    putExtra("width", width).
-                                                    putExtra("height", height).
-                                                    putExtra("startingPosition", position).
-//                                                    putExtra("cardBitmap", cardBitmap).
-                                                    putExtra("cards", cards);
-
-                                            startActivityForResult(intent, ActivityResults.OPEN_CARD_DETAIL);
-
-                                        }
+                                        startActivityForResult(intent, ActivityResults.OPEN_CARD_DETAIL);
                                     }
                                     return null;
                                 }

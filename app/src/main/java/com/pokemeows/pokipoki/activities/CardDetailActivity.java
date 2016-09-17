@@ -182,7 +182,7 @@ public class CardDetailActivity extends AppCompatActivity {
         if (CardOptions.isOptionSelected(cardOptions, CardOptions.WANT)) {
 
         } else {
-            
+
         }
     }
 

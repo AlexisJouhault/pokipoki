@@ -2,6 +2,7 @@ package com.pokemeows.pokipoki.tools;
 
 /**
  * Created by alexisjouhault on 7/12/16.
+ *
  */
 public class ActivityResults {
 
